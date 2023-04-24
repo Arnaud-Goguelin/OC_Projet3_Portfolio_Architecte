@@ -15,19 +15,19 @@ if (projects === null) {
 
 //Affichage des projets sur le DOM
 function createProject (projects) {
-    for (let i in projects) {
+    for (let project in projects) {
     
         const contenerGallery = document.querySelector (".gallery");
 
         const figureElement = document.createElement ("figure");
         //On donne une id à chaque balise figure correspondant à la categoryId de chaque projet, permettant de trier les projets.
-        figureElement.dataset.id = projects [i].category.id;
+        figureElement.dataset.id = projects [project].category.id;
  
         const imageProject = document.createElement ("img");
-        imageProject.src = projects [i].imageUrl;
+        imageProject.src = projects [project].imageUrl;
 
         const captionProject = document.createElement ("figcaption");
-        captionProject.innerText = projects [i].title;
+        captionProject.innerText = projects [project].title;
 
         contenerGallery.appendChild (figureElement);
         figureElement.appendChild (imageProject);
@@ -38,7 +38,6 @@ function createProject (projects) {
 createProject (projects)
 
 
-
 /* Création d'un affichage dynamique des boutons :
 *
 * L'intérêt est de créer un affichage dynamique des boutons filtres en fonction des noms catégories des projets, 
@@ -47,7 +46,8 @@ createProject (projects)
 */
 
 /* Récupération des données des catégories depuis le localstorage. 
-* FACULTATIF INFOS NECESSAIRES DEJA PRESENTENT DANS PROJECTS.
+* FACULTATIF DONNEES NECESSAIRES DEJA PRESENTENT DANS PROJECTS.
+*
 * Est-ce plus intéressant en termes de perfomances de ne télécharger qu'une seule fois des données,
 * et d'avoir un code plus complexe pour les traiter,
 * ou de télécharger plusieurs fois des données et d'avoir un code plus simple?
@@ -66,10 +66,9 @@ createProject (projects)
 //     categories = JSON.parse (categories);
 // };
 
-// console.log(categories)
+
 
 // Affichage des boutons filtres sur le DOM en fonction des données dans l'API
-
 
 function createButtons () {
     // Création du bouton "Tous", indépendant des catégories enregistrées dans l'API.
@@ -83,29 +82,29 @@ function createButtons () {
     
     contenerFilters.appendChild (filterAll);
 
-    // Récupération des noms des catégories en supprimant les doublons.
-    const categoryId = new Set();
-    for (let i of projects) {
-        categoryId.add(i.category.id);
+    // Récupération des noms des catégories des projects en supprimant les doublons (passage en string pour utiliser Set()).
+    const categoriesSet = new Set();
+    for (let project of projects) {
+        categoriesSet.add(JSON.stringify(project.category));
     };
+    // Stockage des données récupérées sans doublons dans un tableau
+    const categoriesArray = Array.from(categoriesSet);
+    // Création d'une copie de ce tableau avec des valeurs parsées (pas en string) pour permettre l'usage des paires clefs : valeurs 
+    let categories = categoriesArray.map (
+        category => JSON.parse(category)); 
 
-    const categoryName = new Set();
-    for (let i of projects) {
-        categoryName.add(i.category.name);
-    };
-
-    // Création des autres boutons en fonctions des categories.name de la base de données
-    for (let i of projects) {
+    // Création des autres boutons en fonctions des paires "name" : "valeurs" du tableau categorie
+    for (let category of categories) {
     
     const filtersElement = document.createElement ("button");
-    filtersElement.textContent = i.category.name;
+    filtersElement.textContent = category.name;
    
     contenerFilters.appendChild (filtersElement);
 
     //On donne une nom de class à chaque balise button ainsi créée pour faciliter le CSS et le tri.
     filtersElement.className = "filters__buttons";
-    //On donne une id à chaque bouton équivalent à l'id de chaque catégorie (pas l'index du tableau, autrement il faudrait faire categories.indexOf (i)) pour permettre le tri les projets.
-    filtersElement.dataset.id = i.category.id;};
+    //On donne une id à chaque bouton équivalent à l'id de chaque catégorie (en fonction des paires "id" : "valeurs" du tableau categorie)
+    filtersElement.dataset.id = category.id;};
     };
 
 createButtons ()
