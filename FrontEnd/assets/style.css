@@ -162,7 +162,7 @@ a:hover {
 	color: #1D6154;
 }
 
-.portfolio__filtres :hover {
+.portfolio__button_active {
 	background-color: #1D6154;
 	color: white;
 }

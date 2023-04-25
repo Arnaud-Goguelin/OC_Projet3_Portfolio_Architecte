@@ -1,41 +1,28 @@
+//Appel à l'API pour récupérer tous les works
+    const answerAPIWorks = await fetch ("http://localhost:5678/api/works");
+    const works = await answerAPIWorks.json ();
 
-// Récupération des données des projets depuis le localstorage
-let projects = window.localStorage.getItem("http://localhost:5678/api/works");
+//Affichage des projets sur le DOM en fonction des works récupérer précédement
+function createWorks(works) {
+    const contenerGallery = document.querySelector(".gallery");
+    contenerGallery.innerHTML ="";
 
-//Au besoin récupération des données des projets depuis l'API
-if (projects === null) {
-    const answerAPI = await fetch ("http://localhost:5678/api/works");
-    projects = await answerAPI.json ();
-
-    const projectsValue = JSON.stringify(projects);
-    window.localStorage.setItem ("projects", projectsValue);
-}else{
-    projects = JSON.parse (projects);
-}
-
-//Affichage des projets sur le DOM
-function createProject (projects) {
-    for (let project in projects) {
-    
-        const contenerGallery = document.querySelector (".gallery");
-
-        const figureElement = document.createElement ("figure");
-        //On donne une id à chaque balise figure correspondant à la categoryId de chaque projet, permettant de trier les projets.
-        figureElement.dataset.id = projects [project].category.id;
+    for (let work in works) {
+        const figureElement = document.createElement("figure");
  
-        const imageProject = document.createElement ("img");
-        imageProject.src = projects [project].imageUrl;
+        const imageWork = document.createElement("img");
+        imageWork.src = works[work].imageUrl;
 
-        const captionProject = document.createElement ("figcaption");
-        captionProject.innerText = projects [project].title;
+        const captionWork = document.createElement("figcaption");
+        captionWork.innerText = works[work].title;
 
-        contenerGallery.appendChild (figureElement);
-        figureElement.appendChild (imageProject);
-        figureElement.appendChild (captionProject);
+        contenerGallery.appendChild(figureElement);
+        figureElement.appendChild(imageWork);
+        figureElement.appendChild(captionWork);
     };
 }
 
-createProject (projects)
+createWorks(works)
 
 
 /* Création d'un affichage dynamique des boutons :
@@ -43,98 +30,48 @@ createProject (projects)
 * L'intérêt est de créer un affichage dynamique des boutons filtres en fonction des noms catégories des projets, 
 * avec une fonction filtre se mettant à jour automatiquement, 
 * selon le nombre de catégorie créé lors de la sauvegarde d'un nouveau projet dans d'API.
-*/
-
-/* Récupération des données des catégories depuis le localstorage. 
-* FACULTATIF DONNEES NECESSAIRES DEJA PRESENTENT DANS PROJECTS.
 *
-* Est-ce plus intéressant en termes de perfomances de ne télécharger qu'une seule fois des données,
-* et d'avoir un code plus complexe pour les traiter,
-* ou de télécharger plusieurs fois des données et d'avoir un code plus simple?
 */
 
-// let categories = window.localStorage.getItem("http://localhost:5678/api/categories");
+//Appel à l'API pour récupérer les catégories de works
+const answerAPICategories = await fetch ("http://localhost:5678/api/categories");
+const categories = await answerAPICategories.json ();
 
-// //Au besoin récupération des données des catégories depuis l'API
-// if (categories === null) {
-//     const answerAPI = await fetch ("http://localhost:5678/api/categories");
-//     categories = await answerAPI.json ();
-
-//     const categoriesValue = JSON.stringify(categories);
-//     window.localStorage.setItem ("categories", categoriesValue);
-// }else{
-//     categories = JSON.parse (categories);
-// };
-
-
-
-// Affichage des boutons filtres sur le DOM en fonction des données dans l'API
-
-function createButtons () {
-    // Création du bouton "Tous", indépendant des catégories enregistrées dans l'API.
+//Affichage du conteneur des boutons puis des boutons filtres sur le DOM en fonction des catégories récupérées précédement
+function createButtonsBox () {
+    
     const contenerFilters = document.querySelector (".portfolio__filtres");
-    const filterAll = document.createElement ("button");
-    filterAll.textContent = "Tous";
-    //On donne une nom de class à chaque balise button ainsi créée pour faciliter le CSS et le tri.
-    filterAll.className = "filters__buttons";
-    //On donne l'id "Afficher tout" au bouton "Tous" pour permettre le tri
-    filterAll.dataset.id = "Afficher tout";
-    
-    contenerFilters.appendChild (filterAll);
-
-    // Récupération des noms des catégories des projects en supprimant les doublons (passage en string pour utiliser Set()).
-    const categoriesSet = new Set();
-    for (let project of projects) {
-        categoriesSet.add(JSON.stringify(project.category));
-    };
-    // Stockage des données récupérées sans doublons dans un tableau
-    const categoriesArray = Array.from(categoriesSet);
-    // Création d'une copie de ce tableau avec des valeurs parsées (pas en string) pour permettre l'usage des paires clefs : valeurs 
-    let categories = categoriesArray.map (
-        category => JSON.parse(category)); 
-
-    // Création des autres boutons en fonctions des paires "name" : "valeurs" du tableau categorie
+    //Ajout d'une catégorie "Tous" dans le tableau categories avec l'id "0"
+    categories.unshift ({id:0,name:"Tous"})
+    //Pour chaque category de categories, création d'un bouton grâche à la fonction createCategoryButton
     for (let category of categories) {
-    
-    const filtersElement = document.createElement ("button");
-    filtersElement.textContent = category.name;
-   
-    contenerFilters.appendChild (filtersElement);
+        const buttons = createCategoryButton(category);
+        contenerFilters.appendChild(buttons);
+    };}
 
-    //On donne une nom de class à chaque balise button ainsi créée pour faciliter le CSS et le tri.
-    filtersElement.className = "filters__buttons";
-    //On donne une id à chaque bouton équivalent à l'id de chaque catégorie (en fonction des paires "id" : "valeurs" du tableau categorie)
-    filtersElement.dataset.id = category.id;};
-    };
+createButtonsBox ()
 
-createButtons ()
-
-/*Création du filtre par bouton:
-* Le filtre compare l'id de la figure à l'id du bouton, et n'affiche que les résultats égaux.
-* Le filtre pour le bouton "Tous" a une id unique en chaîne de caractères "Afficher tout" pour éviter la confusion avec les nombres des id.
+/*Déclaration d'une fonction pour afficher un bouton par category de categories, 
+et lui appliquer un filtre pour n'afficher que les works dont l'id correspond à la l'id de la category utilisée.
 */
+function createCategoryButton(category) {
+    //Création des balises HTML "button" et du texte à affiché
+    const filtersElement = document.createElement("button");
+    filtersElement.textContent = category.name;
+    //Ajout d'une class CSS pour la mise en page
+    filtersElement.classList.add("filters__buttons");
+    //Par défaut, ajout d'une class CSS au bouton "Tous" pour la mise en page du filtre actif
+    category.id === 0 ? filtersElement.classList.add("portfolio__button_active") : null;
 
-const filterButton = document.querySelectorAll (".filters__buttons");
-
-for (let i = 0; i < filterButton.length; i++) {
-
-    filterButton [i].addEventListener ("click", function () {
-
-        if (event.target.dataset.id == "Afficher tout") {
-            
-            //On efface le contenu pour réafficher la totalité
-            document.querySelector (".gallery").innerHTML="";
-            createProject (projects);
-
-        }else{
-
-            const filteredprojects = projects.filter (function (project) {
-            return event.target.dataset.id == project.categoryId;
-            });
-
-            //On efface le contenu avant de le réafficher trié
-            document.querySelector (".gallery").innerHTML="";
-            createProject (filteredprojects);
-        };
+    //Au click, déclenchement d'un filtre pour n'afficher que les works dont la categoryId correspond à la category.id du bouton clicqué
+    filtersElement.addEventListener("click", (event)=>{
+    let workFiltered = category.id === 0 ? works : works.filter(work => work.categoryId === category.id);
+    //Affichage des works filtrés
+    createWorks(workFiltered);
+    //Modification des class CSS des boutons pour modifier la mise en page du bouton actif et l'appliquer au bouton cliqué.
+    document.querySelector(".portfolio__button_active").classList.remove("portfolio__button_active");
+    event.target.classList.add("portfolio__button_active");
     });
-};
+
+    return filtersElement;
+}
