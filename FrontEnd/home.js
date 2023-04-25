@@ -1,5 +1,5 @@
 //Appel à l'API pour récupérer tous les works
-    const answerAPIWorks = await fetch ("http://localhost:5678/api/works");
+    const answerAPIWorks = await fetch("http://localhost:5678/api/works");
     const works = await answerAPIWorks.json ();
 
 //Affichage des projets sur le DOM en fonction des works récupérer précédement
@@ -34,15 +34,15 @@ createWorks(works)
 */
 
 //Appel à l'API pour récupérer les catégories de works
-const answerAPICategories = await fetch ("http://localhost:5678/api/categories");
+const answerAPICategories = await fetch("http://localhost:5678/api/categories");
 const categories = await answerAPICategories.json ();
 
 //Affichage du conteneur des boutons puis des boutons filtres sur le DOM en fonction des catégories récupérées précédement
 function createButtonsBox () {
     
-    const contenerFilters = document.querySelector (".portfolio__filtres");
+    const contenerFilters = document.querySelector(".portfolio__filtres");
     //Ajout d'une catégorie "Tous" dans le tableau categories avec l'id "0"
-    categories.unshift ({id:0,name:"Tous"})
+    categories.unshift({id:0,name:"Tous"})
     //Pour chaque category de categories, création d'un bouton grâche à la fonction createCategoryButton
     for (let category of categories) {
         const buttons = createCategoryButton(category);
