@@ -7,7 +7,7 @@ function createWorks(works) {
     const contenerGallery = document.querySelector(".gallery");
     contenerGallery.innerHTML ="";
 
-    for (let work in works) {
+    for (const work in works) {
         const figureElement = document.createElement("figure");
  
         const imageWork = document.createElement("img");
@@ -44,7 +44,7 @@ function createButtonsBox () {
     //Ajout d'une catégorie "Tous" dans le tableau categories avec l'id "0"
     categories.unshift({id:0,name:"Tous"})
     //Pour chaque category de categories, création d'un bouton grâche à la fonction createCategoryButton
-    for (let category of categories) {
+    for (const category of categories) {
         const buttons = createCategoryButton(category);
         contenerFilters.appendChild(buttons);
     };}
@@ -65,7 +65,7 @@ function createCategoryButton(category) {
 
     //Au click, déclenchement d'un filtre pour n'afficher que les works dont la categoryId correspond à la category.id du bouton clicqué
     filtersElement.addEventListener("click", (event)=>{
-    let workFiltered = category.id === 0 ? works : works.filter(work => work.categoryId === category.id);
+    const workFiltered = category.id === 0 ? works : works.filter(work => work.categoryId === category.id);
     //Affichage des works filtrés
     createWorks(workFiltered);
     //Modification des class CSS des boutons pour modifier la mise en page du bouton actif et l'appliquer au bouton cliqué.
