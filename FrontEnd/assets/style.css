@@ -98,15 +98,16 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
 }
 
-nav li {
-	padding: 0 10px;
+nav a, nav img {
+	margin: 0 20px 0 20px;
 	font-size: 1.2em;
+	color: black;
+	text-decoration: none;
 }
 
-li:hover {
+a:hover {
 	color: #B1663C;
 }
 
