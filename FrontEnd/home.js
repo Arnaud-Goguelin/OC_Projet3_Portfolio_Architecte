@@ -22,7 +22,7 @@ function createWorks(works) {
     };
 }
 
-createWorks(works)
+createWorks(works);
 
 
 /* Création d'un affichage dynamique des boutons :
@@ -47,9 +47,10 @@ function createButtonsBox () {
     for (const category of categories) {
         const buttons = createCategoryButton(category);
         contenerFilters.appendChild(buttons);
-    };}
+    }
+}
 
-createButtonsBox ()
+createButtonsBox ();
 
 /*Déclaration d'une fonction pour afficher un bouton par category de categories, 
 et lui appliquer un filtre pour n'afficher que les works dont l'id correspond à la l'id de la category utilisée.
