@@ -62,9 +62,15 @@ main {
 
 header {
 	display: flex;
-	justify-content: space-between;
-	padding: 50px 0;
+	flex-direction: column;
 	background-color: #FFFEF8;
+}
+
+.header__constant {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 25px 0;
 }
 
 section {
@@ -107,6 +113,10 @@ nav a, nav img {
 	text-decoration: none;
 }
 
+nav a:active {
+	color: black;
+}
+
 a:hover {
 	color: #B1663C;
 }
@@ -114,20 +124,25 @@ a:hover {
 #introduction {
 	display: flex;
 	align-items: center;
+	padding: 0 50px 0 50px;
 }
 
 #introduction figure {
-	flex: 1
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	padding: 70px 70px 70px 20px
 }
 
 #introduction img {
-	display: block;
+	object-fit: cover;
 	margin: auto;
-	width: 80%;
+	width: 100%;
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
 }
 
 #introduction h2 {
@@ -138,13 +153,16 @@ a:hover {
 	margin-bottom: 0.5em;
 }
 
-#portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
+.portfolio__title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 0 60px 0;
 }
 
 .portfolio__filtres {
-	margin: auto auto 50px auto;
+	margin: auto;
+	padding: 0 0 50px 0;
 	width : 71%;
 	display: flex;
 	justify-content: center;
@@ -247,3 +265,79 @@ footer nav ul {
 	margin: auto;
 }
 
+
+/* Code session admin*/
+
+.header__session_admin {
+	width: 100%;
+	height: 60px;
+	background-color: black;
+	color: white;
+	font-size: 16px;
+	font-family: 'Work Sans';
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.header__session_admin p {
+	margin: 0 20px 0 0 ;
+}
+
+.header__session_admin button {
+	background-color: white;
+	color: black;
+	font-weight: 600;
+	border-radius: 25px;
+	border: none;
+	width: 230px;
+	height: 40px;
+}
+
+.header__session_admin button:hover {
+	color:#B1663C;
+}
+
+.header__session_admin button:active {
+	color:black;
+}
+
+.introduction__session_admin {
+	background-color: transparent;
+	border: none;
+	font-size: 16px;
+	font-family: 'Work Sans';
+	margin: 15px 0 0 0;
+}
+
+.introduction__session_admin:hover {
+	color:#B1663C
+}
+
+.introduction__session_admin:active {
+	color:black
+}
+
+.introduction__session_admin i, .portfolio__session_admin i {
+	margin: 0 20px 0 0;
+}
+
+.portfolio__session_admin {
+	background-color: transparent;
+	border: none;
+	font-size: 16px;
+	font-family: 'Work Sans';
+	margin: 0 15px 0 30px;
+}
+
+.portfolio__session_admin:hover{
+	color: #B1663C;
+}
+
+.portfolio__session_admin:active{
+	color: black;
+}
+
+.session_admin_inactive {
+	display:none;
+}
