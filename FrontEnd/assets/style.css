@@ -100,7 +100,7 @@ h2{
 	color: #1D6154
 }
 
-nav ul {
+nav {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
@@ -120,6 +120,11 @@ nav a:active {
 a:hover {
 	color: #B1663C;
 }
+
+nav img:hover {
+	opacity: 70%;
+}
+
 
 #introduction {
 	display: flex;
@@ -259,7 +264,7 @@ footer {
 	padding: 25px 0 25px 0;
 }
 
-footer nav ul {
+footer nav {
 	display: flex;
 	justify-content: flex-end;
 	margin: auto;
