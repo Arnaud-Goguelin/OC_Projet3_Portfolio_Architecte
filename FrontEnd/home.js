@@ -76,3 +76,47 @@ function createCategoryButton(category) {
 
     return filtersElement;
 }
+
+//Gestion de la session admin
+
+let token;
+
+//Stockage de token enregistré dans le sessionStorage (cf.login.js) et déclenchement de la function removeAdminCSSClass s'il n'est pas nul.
+function displayAdminSession (token) {
+    token = window.sessionStorage.getItem("token");
+    token ? removeAdminCSSClass() : null;
+}
+
+// Affichage des éléments du DOM spécifique à la session admin
+
+function removeAdminCSSClass () {
+    // Sélection de tous les éléments du DOM avec la classe ".session_admin_inactive",
+    // Suppression de cette classe pour permettre leur affichage (en display none dans le CSS)
+    const allAdminSessionElements = document.querySelectorAll(".session_admin_inactive");
+    allAdminSessionElements.forEach(
+        (adminSessionElement) => {adminSessionElement.classList.remove("session_admin_inactive")});
+
+    // Sélection de tous les élements du DOM avec la classe ".session_public_active",
+    // Suppression de cette classe et ajout de la classe ".session_admin_inactive",
+    // Afin de ne plus afficher ces éléments tant que la session admin est ouverte.
+    const allPublicSessionElements = document.querySelectorAll(".session_public_active");
+    allPublicSessionElements.forEach(
+        (publicSessionElement) => {
+            publicSessionElement.classList.remove("session_public_active");
+            publicSessionElement.classList.add("session_admin_inactive");
+        });
+}
+
+displayAdminSession (token);
+
+//Au click, nettoyage du sessionStorage pour supprimer le token. Pas de token, pas d'affichage (cf. fonction displayAdminSession et removeAdminCSSClass ci-dessus).
+function disconnect () {
+    const logout = document.querySelector(".nav__session_admin");
+    logout.addEventListener("click", sessionStorage.clear());
+}
+
+disconnect();
+
+/* Pour la modale:
+* vérifier l'utilité de Element.remove()
+*/
