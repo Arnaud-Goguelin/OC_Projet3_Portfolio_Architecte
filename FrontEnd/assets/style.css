@@ -346,3 +346,40 @@ footer nav {
 .session_admin_inactive {
 	display:none;
 }
+
+/* Code modal */
+
+.modal__container {
+	position:fixed;
+	top: 60px;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal__window {
+	width: 630px;
+	height: auto;
+	background-color: white;
+	border-radius: 10px;
+	padding: 60px 100px 60px 100px;
+	color: black;
+}
+
+.fa-xmark {
+	position: relative;
+	top : -30px;
+	left: 680px;
+}
+
+.fa-xmark:hover {
+	color: #B1663C;
+}
+
+.fa-xmark:active {
+	color: black;
+}

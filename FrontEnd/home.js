@@ -120,3 +120,27 @@ disconnect();
 /* Pour la modale:
 * vérifier l'utilité de Element.remove()
 */
+
+//Gestion de la modale
+const modal = document.querySelector(".modal__container");
+const modifyGallery = document.querySelector(".portfolio__session_admin");
+
+modifyGallery.addEventListener("click", function (event) {
+    event.preventDefault()
+    modal.style.display = null;
+})
+
+const closeModal = document.querySelector(".fa-xmark");
+closeModal.addEventListener("click", function () {
+    modal.style.display = "none";
+})
+
+// function displayModalGallery (modifyGallery) {
+//     modifyGallery = document.querySelector(".portfolio__session_admin");
+//     modifyGallery.addEventListener("click", function () {
+//         const modal = document.querySelector(".modal__container");
+//         modal.style.display == null;
+//     })
+// }
+
+// displayModalGallery(modifyGallery);
