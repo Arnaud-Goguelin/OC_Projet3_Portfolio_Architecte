@@ -57,6 +57,7 @@ body {
 }
 
 main {
+	position: relative;
 	background-color: #FFFEF8;
 }
 
@@ -64,6 +65,7 @@ header {
 	display: flex;
 	flex-direction: column;
 	background-color: #FFFEF8;
+	padding : 0 50px 0 50px;
 }
 
 .header__constant {
@@ -74,7 +76,7 @@ header {
 }
 
 section {
-	padding: 50px 0px 50px 0px;
+	padding: 50px 50px 50px 50px;
 }
 
 h1{
@@ -125,7 +127,6 @@ nav img:hover {
 	opacity: 70%;
 }
 
-
 #introduction {
 	display: flex;
 	align-items: center;
@@ -137,7 +138,7 @@ nav img:hover {
 	display: flex;
 	flex-direction: column;
 	align-items: start;
-	padding: 70px 70px 70px 20px
+	padding: 70px 20px 70px 0;
 }
 
 #introduction img {
@@ -228,6 +229,10 @@ nav img:hover {
 	flex-direction: column;
 }
 
+#form a {
+	text-align: center;
+}
+
 #contact input, #login input {
 	height: 50px;
 	font-size: 1.2em;
@@ -268,13 +273,18 @@ footer nav {
 	display: flex;
 	justify-content: flex-end;
 	margin: auto;
+	font-size: 300;
+	font-size: 'Work Sans';
 }
 
 
 /* Code session admin*/
 
-.header__session_admin {
+.body__session_admin {
+	position: sticky;
+	top: 0;
 	width: 100%;
+	max-width: 1140px;
 	height: 60px;
 	background-color: black;
 	color: white;
@@ -285,11 +295,11 @@ footer nav {
 	align-items: center;
 }
 
-.header__session_admin p {
+.body__session_admin p {
 	margin: 0 20px 0 0 ;
 }
 
-.header__session_admin button {
+.body__session_admin button {
 	background-color: white;
 	color: black;
 	font-weight: 600;
@@ -299,11 +309,11 @@ footer nav {
 	height: 40px;
 }
 
-.header__session_admin button:hover {
+.body__session_admin button:hover {
 	color:#B1663C;
 }
 
-.header__session_admin button:active {
+.body__session_admin button:active {
 	color:black;
 }
 
@@ -350,36 +360,111 @@ footer nav {
 /* Code modal */
 
 .modal__container {
-	position:fixed;
-	top: 60px;
-	left: 0;
-	height: 100%;
+	position:absolute;
+	top: -90px;
+	bottom : 0;
 	width: 100%;
+	max-width: 1140px;
+	padding: 18% 0 0 0;
 	background-color: rgba(0, 0, 0, 0.3);
 	display: flex;
-	align-items: center;
+	align-items:start ;
 	justify-content: center;
 }
 
 .modal__window {
-	width: 630px;
+	width: 55%;
 	height: auto;
 	background-color: white;
 	border-radius: 10px;
-	padding: 60px 100px 60px 100px;
+	padding: 60px 100px 50px 100px;
 	color: black;
 }
 
-.fa-xmark {
-	position: relative;
-	top : -30px;
-	left: 680px;
+h3 {
+	font-family: 'Work Sans';
+	font-size: 26px;
+	margin: 0 0 45px 0;
 }
 
-.fa-xmark:hover {
+hr {
+	color:#B3B3B3;
+	width: 66%;
+}
+
+.modal__window__header {
+	text-align: center;
+}
+
+.modal__close_button {
+	position: relative;
+	top : -30px;
+	left: 105%;
+	background-color: transparent;
+	border: none;
+}
+
+.modal__close_button:hover {
 	color: #B1663C;
 }
 
-.fa-xmark:active {
+.modal__close_button:active {
 	color: black;
 }
+
+.modal__window__gallery{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 0 0 50px 0;
+}
+
+.modal__window__gallery figure {
+	width: 18%;
+}
+
+.modal__window__gallery img {
+	width: 100%;
+}
+
+.modal__window__gallery button {
+	background-color: transparent;
+	border: none;
+	margin : 0 0 10px 0;
+}
+
+.modal__window__gallery button:hover {
+	color:#B1663C;
+}
+
+.modal__window__gallery button:active {
+	color:black;
+}
+
+.modal__window__footer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.modal__window__footer button {
+width: auto;
+margin: 10px 0 10px 0;
+padding: 10px 45px 10px 45px;
+background-color: #1D6154;
+border: none;
+border-radius: 60px;
+color: white;
+font-family: 'Syne';
+font-size: 17px;
+font-weight: 700;
+}
+
+#modal__footer__delete_gallery {
+	color: #D65353;
+	background-color: transparent;
+	font-weight: 400;
+}
+
+
+
