@@ -4,7 +4,7 @@ const connection = document.querySelector('[id = "connection"]');
 *les envoyer à l'API, 
 *s'ils sont bons, être rediriger vers index.html
 */
-connection.addEventListener("click", async function (event){
+connection.addEventListener("click", async function(event){
     event.preventDefault();
     try {
         //Récupération des emails et password saisis par l'utilisateur
