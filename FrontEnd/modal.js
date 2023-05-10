@@ -54,8 +54,9 @@ export function createWorksModal(works) {
         modalDeleteButton.src = "assets/icons/delete.png";
         modalDeleteButton.id = "modal__gallery__delete_button";
         figureElement.appendChild(modalDeleteButton);
-
+        
         imageWork.addEventListener("mouseover", () => modalMoveButton.style.visibility = null);
+        imageWork.addEventListener("mouseout", () => modalMoveButton.style.visibility = "hidden");
     };
 };
 

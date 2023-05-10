@@ -442,8 +442,7 @@ hr {
 #modal__gallery__delete_button, #modal__gallery__move_button  {
 	background-color: black;
 	border-radius: 2px;
-	color:white;
-	width: 10px;
+	width: 12px;
 	padding: 2px;
 	margin: 0 1px;
 }
