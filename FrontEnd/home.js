@@ -1,5 +1,18 @@
 import {openModal} from "./modal.js"
 
+function boldLink () {
+    const navLinks = document.querySelectorAll(".link");
+    console.log(navLinks);
+    navLinks.forEach((link) => {link.addEventListener("click", function() {
+        const activelink = document.querySelector(".active");
+        activelink.classList.remove("active");
+        event.target.classList.add("active");
+        });
+    });
+}
+
+boldLink();
+
 //Appel à l'API pour récupérer tous les works
 const answerAPIWorks = await fetch("http://localhost:5678/api/works");
 export const works = await answerAPIWorks.json();

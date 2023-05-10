@@ -117,11 +117,11 @@ nav a, nav img {
 }
 
 a:hover {
-	color: #B1663C;
+	font-weight: 600;
 }
 
-a:active {
-	color: black;
+.active {
+	font-weight: 600;
 }
 
 nav img:hover {
@@ -450,14 +450,14 @@ hr {
 
 #modal__gallery__delete_button {
 	position: relative;
-	bottom: 105px;
-	left: 5px;
+	bottom: 85%;
+	left: 30%;
 }
 
 #modal__gallery__move_button {
 	position: relative;
-	bottom: 105px;
-	left: 5px;
+	bottom: 85%;
+	left: 30%;
 }
 
 .modal__window__footer {
