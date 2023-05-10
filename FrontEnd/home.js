@@ -2,7 +2,6 @@ import {openModal} from "./modal.js"
 
 function boldLink () {
     const navLinks = document.querySelectorAll(".link");
-    console.log(navLinks);
     navLinks.forEach((link) => {link.addEventListener("click", function() {
         const activelink = document.querySelector(".active");
         activelink.classList.remove("active");
