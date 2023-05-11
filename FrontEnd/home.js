@@ -1,8 +1,9 @@
 import {openModal} from "./modal.js"
 
+// Affichage en gras du lien du nav actif
 function boldLink () {
     const navLinks = document.querySelectorAll(".link");
-    navLinks.forEach((link) => {link.addEventListener("click", function() {
+    navLinks.forEach(link => {link.addEventListener("click", function() {
         const activelink = document.querySelector(".active");
         activelink.classList.remove("active");
         event.target.classList.add("active");
@@ -50,7 +51,7 @@ createWorks(works);
 
 //Appel à l'API pour récupérer les catégories de works
 const answerAPICategories = await fetch("http://localhost:5678/api/categories");
-const categories = await answerAPICategories.json();
+export const categories = await answerAPICategories.json();
 
 //Affichage du conteneur des boutons puis des boutons filtres sur le DOM en fonction des catégories récupérées précédement
 function createButtonsBox() {
@@ -94,17 +95,17 @@ function createCategoryButton(category) {
 
 //Gestion de la session admin
 
-let token;
+export let token;
 
 //Stockage de token enregistré dans le sessionStorage (cf.login.js) et déclenchement de la function removeAdminCSSClass s'il n'est pas nul.
-function displayAdminSession(token) {
+function connectAdminSession(token) {
     token = window.sessionStorage.getItem("token");
-    token ? removeAdminCSSClass() : null;
+    token ? displayAdminSession() : null;
 }
 
 // Affichage des éléments du DOM spécifique à la session admin
 
-function removeAdminCSSClass() {
+function displayAdminSession() {
     // Sélection de tous les éléments du DOM avec la classe ".session_admin_inactive",
     // Suppression de cette classe pour permettre leur affichage (en display none dans le CSS)
     const allAdminSessionElements = document.querySelectorAll(".session_admin_inactive");
@@ -122,12 +123,30 @@ function removeAdminCSSClass() {
         });
 }
 
-displayAdminSession(token);
+connectAdminSession(token);
 
-//Au click, nettoyage du sessionStorage pour supprimer le token. Pas de token, pas d'affichage (cf. fonction displayAdminSession et removeAdminCSSClass ci-dessus).
+//Au click,  inverser l'affichage des éléments admin et publics du DOM et nettoyage du sessionStorage pour supprimer le token.
 const logout = document.querySelector(".nav__session_admin");
-logout.addEventListener("click", sessionStorage.clear());
+logout.addEventListener("click", disconnectAdminSession);
 
+function disconnectAdminSession() {
+    hideAdminSession;
+    sessionStorage.clear();
+}
+
+function hideAdminSession() {
+    //Fait l'inverse de displayAdminSession dans la suppression et l'ajout des classes CSS.
+    const allPublicSessionElements = document.querySelectorAll(".session_admin_inactive");
+    allPublicSessionElements.forEach(
+        (publicSessionElement) => { publicSessionElement.classList.remove("session_admin_inactive") });
+
+    const allAdminSessionElements = document.querySelectorAll(".session_public_active");
+    allAdminSessionElements.forEach(
+        (adminSessionElement) => {
+            adminSessionElement.classList.remove("session_public_active");
+            adminSessionElement.classList.add("session_admin_inactive");
+        });
+}
 
 // Gestion de la modale :
 const openModalButton = document.querySelector(".portfolio__session_admin");
