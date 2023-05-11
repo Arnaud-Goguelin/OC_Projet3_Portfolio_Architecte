@@ -422,38 +422,30 @@ hr {
 	margin : 0 4px 10px 4px;
 }
 
-.modal__window__gallery img {
+.imageWork {
 	width: 100%;
 }
 
-.modal__window__gallery button {
+.modal__gallery__publish_button {
 	background-color: transparent;
 	border: none;
 }
 
-#modal__gallery__publish_button:hover {
+.modal__gallery__publish_button:hover {
 	color:#B1663C;
 }
 
-#modal__gallery__publish_button:active {
+.modal__gallery__publish_button:active {
 	color:black;
 }
 
-#modal__gallery__delete_button, #modal__gallery__move_button  {
+.modal__gallery__delete_button, .modal__gallery__move_button  {
+	border: none;
 	background-color: black;
 	border-radius: 2px;
 	width: 12px;
 	padding: 2px;
 	margin: 0 1px;
-}
-
-#modal__gallery__delete_button {
-	position: relative;
-	bottom: 85%;
-	left: 30%;
-}
-
-#modal__gallery__move_button {
 	position: relative;
 	bottom: 85%;
 	left: 30%;
