@@ -95,14 +95,11 @@ function createCategoryButton(category) {
 
 //Gestion de la session admin
 
-export let token;
-
+export let token = window.sessionStorage.getItem("token");;
 //Stockage de token enregistré dans le sessionStorage (cf.login.js) et déclenchement de la function removeAdminCSSClass s'il n'est pas nul.
 function connectAdminSession(token) {
-    token = window.sessionStorage.getItem("token");
     token ? displayAdminSession() : null;
 }
-
 // Affichage des éléments du DOM spécifique à la session admin
 
 function displayAdminSession() {
