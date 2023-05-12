@@ -1,27 +1,28 @@
-import {works, token} from "./home.js"
-import {createWorksModal} from "./modal_open_close.js"
+import {works, token, createWorks} from "./home.js"
 
-export function deleteWork(works) {
+export async function deleteSelectedWork(event) {
 
-    //Attention supprime tous les works...
-    for (const work of works) {
-            
-        // Suppression du work associé au clicl sur le bouton delete
-        const modalDeleteButton = document.querySelector(".modal__gallery__delete_button");
-        modalDeleteButton.addEventListener("click", deleteSelectedWork);
-        
-        //Suppression d'un work au clic sur le bouton delete
-        async function deleteSelectedWork() {
-            try {
-                console.log(token);
-                const answerAPIDelete = await fetch (`http://localhost:5678/api/works/${work.id}`, {
-                    method: "DELETE",
-                    headers: {"Authorization" : "Bearer " + token},
-                });
-                answerAPIDelete.ok ? createWorksModal(works) : null;    
-            } catch(error) {
-                console.error(error);
-            }                
-        }
-    };
+    try {
+
+        const answerAPIDelete = await fetch (`http://localhost:5678/api/works/${event.target.id}`, {
+            method: "DELETE",
+            headers: {"Authorization" : `Bearer ${token}`},
+        });
+
+        // let remainingWorks = works.filter(work => work.id != event.target.id);
+        // console.log(remainingWorks)
+        // answerAPIDelete.ok ? createWorksModal(remainingWorks) : null;
+        // answerAPIDelete.ok ? createWorks(remainingWorks) : null;
+        // remainingWorks = null;
+        // console.log(remainingWorks);
+
+        const worksToRemove = document.querySelectorAll(`#work${event.target.id}`);
+        worksToRemove.forEach(work => work.remove());
+
+    } catch(error) {
+
+        console.error(error);
+
+    }                
 }
+

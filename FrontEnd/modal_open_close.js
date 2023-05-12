@@ -1,4 +1,5 @@
 import {works} from "./home.js"
+import {deleteSelectedWork} from "./modal_delete.js"
 
 export function openModal() {
     const cloneModal = document.querySelector("#modal").content.cloneNode(true);
@@ -13,7 +14,7 @@ export function openModal() {
 
 // Contraint les deux addEventListener ci-dessus à .modal__container (arrière plan de la modale) ou à .modal__close_button (bouton en croix)
     let modalWindow = document.querySelector(".modal__window");
-    modalWindow.addEventListener("click", (event)=>{event.stopPropagation()});
+    modalWindow.addEventListener("click", event => event.stopPropagation());
 }
 
 /* Fonction closeModal = au click, supprime la cible du DOM. Quelle que soit la cible du clic, la fonction s'applique à toute la modale 
@@ -35,6 +36,7 @@ export async function createWorksModal(works) {
     for (const work of works) {
             
         const figureElement = document.createElement("figure");
+        figureElement.id = `work${work.id}`;
         contenerGallery.appendChild(figureElement);
 
         const imageWork = document.createElement("img");
@@ -56,10 +58,15 @@ export async function createWorksModal(works) {
         const modalDeleteButton = document.createElement("img");
         modalDeleteButton.src = "assets/icons/delete.png";
         modalDeleteButton.classList.add("modal__gallery__delete_button");
+        modalDeleteButton.id = work.id;
         figureElement.appendChild(modalDeleteButton);
         
-        //Effet d'affichage du bouton expand: 
+        //Effet d'affichage du bouton expand
         figureElement.addEventListener("mouseover", () => modalExpandButton.style.visibility = null);
         figureElement.addEventListener("mouseout", () => modalExpandButton.style.visibility = "hidden");
+
+        //Ajout d'un eventListener à la création du bouton pour appeler la fonction deleteSelectedWork
+        modalDeleteButton.addEventListener("click", deleteSelectedWork);
     };
 }
+

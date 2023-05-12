@@ -1,5 +1,4 @@
 import {openModal} from "./modal_open_close.js"
-import {deleteWork} from "./modal_delete.js"
 
 // Affichage en gras du lien du nav actif
 function boldLink () {
@@ -19,13 +18,14 @@ const answerAPIWorks = await fetch("http://localhost:5678/api/works");
 export const works = await answerAPIWorks.json();
 
 //Affichage des projets sur le DOM en fonction des works récupérer précédement
-function createWorks(works) {
+export function createWorks(works) {
     let contenerGallery = document.querySelector(".gallery");
     contenerGallery.innerHTML = "";
 
     for (const work of works) {
 
         const figureElement = document.createElement("figure");
+        figureElement.id = `work${work.id}`;
         contenerGallery.appendChild(figureElement);
 
         const imageWork = document.createElement("img");
@@ -108,14 +108,14 @@ function displayAdminSession() {
     // Suppression de cette classe pour permettre leur affichage (en display none dans le CSS)
     const allAdminSessionElements = document.querySelectorAll(".session_admin_inactive");
     allAdminSessionElements.forEach(
-        (adminSessionElement) => { adminSessionElement.classList.remove("session_admin_inactive") });
+        adminSessionElement =>  adminSessionElement.classList.remove("session_admin_inactive") );
 
     // Sélection de tous les élements du DOM avec la classe ".session_public_active",
     // Suppression de cette classe et ajout de la classe ".session_admin_inactive",
     // Afin de ne plus afficher ces éléments tant que la session admin est ouverte.
     const allPublicSessionElements = document.querySelectorAll(".session_public_active");
     allPublicSessionElements.forEach(
-        (publicSessionElement) => {
+        publicSessionElement => {
             publicSessionElement.classList.remove("session_public_active");
             publicSessionElement.classList.add("session_admin_inactive");
         });
@@ -136,11 +136,11 @@ function hideAdminSession() {
     //Fait l'inverse de displayAdminSession dans la suppression et l'ajout des classes CSS.
     const allPublicSessionElements = document.querySelectorAll(".session_admin_inactive");
     allPublicSessionElements.forEach(
-        (publicSessionElement) => { publicSessionElement.classList.remove("session_admin_inactive") });
+        publicSessionElement =>  publicSessionElement.classList.remove("session_admin_inactive"));
 
     const allAdminSessionElements = document.querySelectorAll(".session_public_active");
     allAdminSessionElements.forEach(
-        (adminSessionElement) => {
+        adminSessionElement => {
             adminSessionElement.classList.remove("session_public_active");
             adminSessionElement.classList.add("session_admin_inactive");
         });
@@ -150,4 +150,3 @@ function hideAdminSession() {
 const openModalButton = document.querySelector(".portfolio__session_admin");
 openModalButton.addEventListener("click", openModal);
 
-deleteWork(works);
