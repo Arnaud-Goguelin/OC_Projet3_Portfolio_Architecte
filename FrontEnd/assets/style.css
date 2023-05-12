@@ -439,7 +439,7 @@ hr {
 	color:black;
 }
 
-.modal__gallery__delete_button, .modal__gallery__move_button  {
+.modal__gallery__delete_button, .modal__gallery__expand_button  {
 	border: none;
 	background-color: black;
 	border-radius: 2px;

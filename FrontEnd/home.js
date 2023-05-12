@@ -1,4 +1,5 @@
-import {openModal} from "./modal.js"
+import {openModal} from "./modal_open_close.js"
+import {deleteWork} from "./modal_delete.js"
 
 // Affichage en gras du lien du nav actif
 function boldLink () {
@@ -22,17 +23,17 @@ function createWorks(works) {
     let contenerGallery = document.querySelector(".gallery");
     contenerGallery.innerHTML = "";
 
-    for (const work in works) {
+    for (const work of works) {
 
         const figureElement = document.createElement("figure");
         contenerGallery.appendChild(figureElement);
 
         const imageWork = document.createElement("img");
-        imageWork.src = works[work].imageUrl;
+        imageWork.src = work.imageUrl;
         figureElement.appendChild(imageWork);
 
         const captionWork = document.createElement("figcaption");
-        captionWork.innerText = works[work].title;
+        captionWork.innerText = work.title;
         figureElement.appendChild(captionWork);
     };
 };
@@ -148,3 +149,5 @@ function hideAdminSession() {
 // Gestion de la modale :
 const openModalButton = document.querySelector(".portfolio__session_admin");
 openModalButton.addEventListener("click", openModal);
+
+deleteWork(works);

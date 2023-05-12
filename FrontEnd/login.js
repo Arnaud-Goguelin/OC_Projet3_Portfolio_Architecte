@@ -24,7 +24,7 @@ connection.addEventListener("click", async function(event){
             //Récupération du token de connexion
             const login = await answerAPILogin.json();
             //Stockage du token dans le session storage s'il est existant
-            login.token ? window.sessionStorage.setItem("token", JSON.stringify(login.token)) : null;
+            login.token ? window.sessionStorage.setItem("token", login.token) : null;
             //Redirection vers la page d'accueil, sinon afficher message d'erreur
             window.location.href = "index.html";
         }else{
