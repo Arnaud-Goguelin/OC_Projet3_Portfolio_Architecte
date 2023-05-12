@@ -15,9 +15,10 @@ export async function deleteSelectedWork(event) {
         // answerAPIDelete.ok ? createWorks(remainingWorks) : null;
         // remainingWorks = null;
         // console.log(remainingWorks);
-
-        const worksToRemove = document.querySelectorAll(`#work${event.target.id}`);
-        worksToRemove.forEach(work => work.remove());
+        if (answerAPIDelete.ok) { 
+            const worksToRemove = document.querySelectorAll(`#work${event.target.id}`);
+            worksToRemove.forEach(work => work.remove());
+        }
 
     } catch(error) {
 
