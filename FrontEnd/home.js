@@ -25,7 +25,8 @@ export function createWorks(works) {
     for (const work of works) {
 
         const figureElement = document.createElement("figure");
-        figureElement.id = `work${work.id}`;
+        //On donne une id à la figure pour la suppression du work dans la modale
+        // figureElement.dataset.id = `${work.id}`;
         contenerGallery.appendChild(figureElement);
 
         const imageWork = document.createElement("img");
