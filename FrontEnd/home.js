@@ -16,6 +16,7 @@ boldLink();
 //Appel à l'API pour récupérer tous les works
 const answerAPIWorks = await fetch("http://localhost:5678/api/works");
 export const works = await answerAPIWorks.json();
+console.log(works);
 
 //Affichage des projets sur le DOM en fonction des works récupérer précédement
 export function createWorks(works) {
@@ -25,7 +26,9 @@ export function createWorks(works) {
     for (const work of works) {
 
         const figureElement = document.createElement("figure");
-        figureElement.id = `work${work.id}`;
+        //On donne une id à la figure pour la suppression du work dans la modale
+        // figureElement.dataset.id = `${work.id}`;
+        console.log(figureElement.dataset.id)
         contenerGallery.appendChild(figureElement);
 
         const imageWork = document.createElement("img");
