@@ -1,20 +1,32 @@
-import {works} from "./home.js"
-import {deleteSelectedWork} from "./modal_delete.js"
+import { works } from "./home.js"
+import { deleteSelectedWork } from "./modal_delete.js"
+import { openAddWorkModal } from "./modal_add_work.js"
 
 export function openModal() {
+    //Récupération et affichage des structures et contenus HTML dans les balises templates
     const cloneModal = document.querySelector("#modal").content.cloneNode(true);
     document.body.appendChild(cloneModal);
+
+    const cloneModalGallery = document.querySelector("#modal__window__gallery").content.cloneNode(true);
+    const modalWindow = document.querySelector(".modal__window");
+    modalWindow.appendChild(cloneModalGallery);
+
+    //Affichage dynamique des works dans la gallerie de la modale
     createWorksModal(works);
 
-    let modalCloseButton = document.querySelector(".modal__close_button");
+    //Gestion de la fermeture de la modale
+    const modalCloseButton = document.querySelector(".modal__close_button");
     modalCloseButton.addEventListener("click", closeModal);
 
-    let modalBackground = document.querySelector(".modal__container");
+    const modalBackground = document.querySelector(".modal__background");
     modalBackground.addEventListener("click", closeModal);
 
-// Contraint les deux addEventListener ci-dessus à .modal__container (arrière plan de la modale) ou à .modal__close_button (bouton en croix)
-    let modalWindow = document.querySelector(".modal__window");
+    // Contraint les deux addEventListener ci-dessus à .modal__container (arrière plan de la modale) ou à .modal__close_button (bouton en croix)
     modalWindow.addEventListener("click", event => event.stopPropagation());
+
+    //Ouverture de la deuxième fenêtre de la modale pour l'ajout des works
+    const modalAddWorkButton = document.querySelector("#modal__gallery__addWork");
+    modalAddWorkButton.addEventListener("click", openAddWorkModal);
 }
 
 /* Fonction closeModal = au click, supprime la cible du DOM. Quelle que soit la cible du clic, la fonction s'applique à toute la modale 
@@ -23,14 +35,14 @@ export function openModal() {
 */
 
 function closeModal(target) {
-    target = document.querySelector(".modal__container");
+    target = document.querySelector(".modal__background");
     target.remove();
 }
 
 // Affichage des works dans la modale
 export async function createWorksModal(works) {
 
-    const contenerGallery = document.querySelector(".modal__window__gallery");
+    const contenerGallery = document.querySelector(".modal__gallery__main");
     contenerGallery.innerHTML ="";
 
     for (const work of works) {
@@ -69,4 +81,6 @@ export async function createWorksModal(works) {
         modalDeleteButton.addEventListener("click", deleteSelectedWork);
     };
 }
+
+
 

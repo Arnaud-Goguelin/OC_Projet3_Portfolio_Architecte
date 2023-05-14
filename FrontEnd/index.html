@@ -86,7 +86,7 @@
 		<section id="contact">
 			<h2>Contact</h2>
 			<p>Vous avez un projet ? Discutons-en !</p>
-			<form action="#" method="post" id="form">
+			<form action="#" method="post" id="contac__form">
 				<label for="name">Nom</label>
 				<input type="text" name="name" id="name">
 				<label for="email">Email</label>
@@ -98,19 +98,58 @@
 		</section>
 
 		<template id="modal">
-			<div class="modal__container">
+
+			<div class="modal__background">
 				<div class="modal__window">
-					<button class="modal__close_button"><i class="fa-solid fa-xmark"></i></button>
-					<div class="modal__window__header">
-						<h3>Gallerie Photo</h3>
+					<div class="modal__header">
+						<button class="modal__previous_button" style="visibility: hidden;"><i class="fa-solid fa-arrow-left"></i></button>
+						<button class="modal__close_button"><i class="fa-solid fa-xmark"></i></button>
 					</div>
-					<div class="modal__window__gallery">
-					</div>
-					<hr>
-					<div class="modal__window__footer">
-						<button>Ajoutter une photo</button>
-						<button id = "modal__footer__delete_gallery">Supprimer la galerie</button>
-					</div>
+
+					<template id = "modal__window__gallery" >
+						
+						<div class ="modal__gallery__container">
+							<div class = "modal__gallery__title">
+								<h3>Gallerie Photo</h3>
+							</div>
+							<div class="modal__gallery__main">
+							</div>
+							<hr>
+							<div class="modal__gallery__footer">
+								<button id ="modal__gallery__addWork">Ajoutter une photo</button>
+								<button id = "modal__gallery__delete_gallery">Supprimer la galerie</button>
+							</div>
+						</div>
+
+					</template>
+
+					<template id = "modal__window__addWork">
+
+						<div class="modal__addWork__container">
+							<div class = "modal__addWork__header">
+								<h3>Ajout Photo</h3>
+							</div>
+							<div class = "modal__addWork__main">
+								<div class = "addWork_image_container">
+									<img src="assets/icons/image.png" alt="dessin d'image">
+									<button id = "modal__addWork_addPhotoButton">+ Ajouter photo</button>
+									<p>jpg, png : 4mo max</p>
+								</div>
+								<form action="#" method="post" id="form__newWork" >
+									<label for="titel">Titre</label>
+									<input type="text" name="title" id="newWorkTitle">
+									<label for="category">Catégorie</label>
+									<select name="category" id="newWorkCategory"></select>
+								</form>
+							</div>
+							<hr>
+							<div class="modal__addWork__footer">
+								<button id ="modal__addWork__validate" class = "modal__addWork__validate_inactive">Valider</button>
+							</div>
+						</div>
+
+					</template>
+
 				</div>
 			</div>
 		</template>

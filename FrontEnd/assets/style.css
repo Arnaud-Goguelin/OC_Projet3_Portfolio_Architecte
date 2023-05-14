@@ -223,7 +223,7 @@ nav img:hover {
 	margin-bottom: 20px;
 }
 
-#form {
+#contac__form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
@@ -358,7 +358,7 @@ footer nav {
 
 /* Code modal */
 
-.modal__container {
+.modal__background {
 	position:absolute;
 	top: 60px;
 	bottom : 0;
@@ -384,6 +384,7 @@ h3 {
 	font-family: 'Work Sans';
 	font-size: 26px;
 	margin: 0 0 45px 0;
+	text-align: center;
 }
 
 hr {
@@ -391,14 +392,13 @@ hr {
 	width: 66%;
 }
 
-.modal__window__header {
-	text-align: center;
+.modal__header {
+	display: flex;
+	justify-content: space-between;
+	margin: 0 0 15px 0;
 }
 
 .modal__close_button {
-	position: relative;
-	top : -30px;
-	left: 105%;
 	background-color: transparent;
 	border: none;
 }
@@ -411,13 +411,26 @@ hr {
 	color: black;
 }
 
-.modal__window__gallery{
+.modal__previous_button {
+	background-color: transparent;
+	border: none;
+}
+
+.modal__previous_button:hover {
+	color: #B1663C;
+}
+
+.modal__previous_button :active {
+	color: black;
+}
+
+.modal__gallery__main {
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
 }
 
-.modal__window__gallery figure {
+.modal__gallery__main figure {
 	width: 18%;
 	margin : 0 4px 10px 4px;
 }
@@ -451,30 +464,105 @@ hr {
 	left: 30%;
 }
 
-.modal__window__footer {
+.modal__gallery__footer {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
-.modal__window__footer button {
-width: auto;
-margin: 10px 0 10px 0;
-padding: 10px 45px 10px 45px;
-background-color: #1D6154;
-border: none;
-border-radius: 60px;
-color: white;
-font-family: 'Syne';
-font-size: 17px;
-font-weight: 700;
+.modal__gallery__footer button {
+	width: auto;
+	margin: 10px 0 10px 0;
+	padding: 10px 45px 10px 45px;
+	border: none;
+	border-radius: 60px;
+	font-family: 'Syne';
+
 }
 
-#modal__footer__delete_gallery {
+#modal__gallery__addWork {
+	background-color: #1D6154;
+	font-size: 17px;
+	font-weight: 700;
+	color: white;
+}
+
+#modal__gallery__delete_gallery {
 	color: #D65353;
 	background-color: transparent;
 	font-weight: 400;
 }
 
+.addWork_image_container {
+	background-color: #E8F1F6;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	padding: 30px 0 20px 0;
+	margin: 0 0 30px 0;
+}
 
+.addWork_image_container img {
+	width: 15%;
+	margin: 0 0 10px 0;
+}
 
+#modal__addWork_addPhotoButton {
+	width: 40%;
+	border: none;
+	background-color: #CBD6DC;
+	padding: 10px 30px;
+	border-radius: 50px;
+	font-family: 'Work sans';
+	color: #306685;
+	font-size: 14px;
+	font-weight: 500;
+	margin: 10px 0px;
+}
+
+#form__newWork {
+	display: flex;
+	flex-direction: column;
+	margin: 0 0 30px 0;
+}
+
+#form__newWork label {
+	font-family: 'Work sans';
+	font-size: 14px;
+	font-weight: 500;
+	margin: 0 0 10px 0;
+}
+
+#form__newWork input, #form__newWork select {
+	border: none;
+	background: #FFFFFF;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	padding: 18px 15px;
+	margin: 0 0 20px 0;
+	font-family: 'Work sans';
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.modal__addWork__footer {
+	display: flex;
+	justify-content: center;
+}
+
+#modal__addWork__validate {
+	align-self: center;
+	width: 40%;
+	margin: 10px 0;
+	padding: 10px 45px 10px 45px;
+	border: none;
+	border-radius: 60px;
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: 700;
+	color: white;
+}
+
+.modal__addWork__validate_inactive {
+	background-color: #A7A7A7;
+}
