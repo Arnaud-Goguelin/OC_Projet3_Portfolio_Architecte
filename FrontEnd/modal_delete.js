@@ -20,16 +20,6 @@ export async function deleteSelectedWork(event) {
         let workToSplice = works.findIndex(work => work.id == figureId);
         works.splice(workToSplice, 1)
 
-        // 2e possibilité: supprimer les toutes les figures du document dont l'id est égale à l'id de la figure sélectionné
-        // if (answerAPIDelete.ok) { 
-        //     const worksToRemove = document.querySelectorAll(`#{figureId}`);
-        //     console.log(worksToRemove)
-        //     worksToRemove.forEach(work => work.remove());
-        //     //MAJ du tableau works
-        //     let workToSplice = works.findIndex(work => work.id == figureId);
-        //     works.splice(workToSplice, 1)
-        // }
-
     } catch(error) {
 
         console.error(error);
