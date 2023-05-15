@@ -12,13 +12,13 @@ export async function deleteSelectedWork(event) {
             method: "DELETE",
             headers: {"Authorization" : `Bearer ${token}`},
         });
-        // Réaffichage des works dans la modale et sur la page d'accueil suite à la suppression du work ciblé
-        let remainingWorks = works.filter(work => work.id != figureId);
-        answerAPIDelete.ok ? createWorksModal(remainingWorks) : null;
-        answerAPIDelete.ok ? createWorks(remainingWorks) : null;
         //MAJ du tableau works
         let workToSplice = works.findIndex(work => work.id == figureId);
         works.splice(workToSplice, 1)
+        // Réaffichage des works dans la modale et sur la page d'accueil suite à la suppression du work ciblé
+        answerAPIDelete.ok ? createWorksModal(works) : null;
+        answerAPIDelete.ok ? createWorks(works) : null;
+
 
     } catch(error) {
 
