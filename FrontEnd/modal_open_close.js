@@ -77,7 +77,7 @@ export async function createWorksModal(works) {
         figureElement.addEventListener("mouseover", () => modalExpandButton.style.visibility = null);
         figureElement.addEventListener("mouseout", () => modalExpandButton.style.visibility = "hidden");
 
-        //Ajout d'un eventListener à la création du bouton pour appeler la fonction deleteSelectedWork
+        //Ajout d'un eventListener à la création du bouton Delete pour appeler la fonction deleteSelectedWork
         modalDeleteButton.addEventListener("click", deleteSelectedWork);
     };
 }
