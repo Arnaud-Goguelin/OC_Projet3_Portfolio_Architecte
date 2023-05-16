@@ -55,29 +55,31 @@ body {
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 	position: relative;
+	background-color: #FFFEF8;	
 }
 
 main {
-	background-color: #FFFEF8;
 	position: relative;
+	width: 90%;
+	margin: auto;
 }
 
 header {
 	display: flex;
 	flex-direction: column;
 	background-color: #FFFEF8;
-	padding : 0 50px 0 50px;
+	margin: 60px 0;
+	position: relative;
 }
 
 .header__constant {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	padding: 25px 0;
 }
 
 section {
-	padding: 50px 50px 50px 50px;
+	margin: 50px 0;
 }
 
 h1{
@@ -110,7 +112,7 @@ nav {
 }
 
 nav a, nav img {
-	margin: 0 20px 0 20px;
+	margin: 0 0 0 20px;
 	font-size: 1.2em;
 	color: black;
 	text-decoration: none;
@@ -131,7 +133,6 @@ nav img:hover {
 #introduction {
 	display: flex;
 	align-items: center;
-	padding: 0 50px 0 50px;
 }
 
 #introduction figure {
@@ -143,9 +144,9 @@ nav img:hover {
 }
 
 #introduction img {
-	object-fit: cover;
-	margin: auto;
-	width: 100%;
+	display: block;
+	margin: auto 50px auto 0;
+	width: 90%;
 }
 
 #introduction article {
@@ -266,25 +267,27 @@ input[type="submit"]{
 }
 
 footer {
-	width: 100%;
 	padding: 25px 0 25px 0;
+	width: 100%;
 }
 
 footer nav {
 	display: flex;
 	justify-content: flex-end;
 	margin: auto;
-	font-size: 300;
-	font-size: 'Work Sans';
 }
+
 
 
 /* Code session admin*/
 
-.body__session_admin {
-	width: 100%;
-	max-width: 1140px;
-	height: 60px;
+.header__session_admin {
+	position: absolute;
+	top: -60px;
+	left: -10.5%;
+	width: 100vw;
+	max-width: 1440px;
+	height: 50px;
 	background-color: black;
 	color: white;
 	font-size: 16px;
@@ -294,11 +297,11 @@ footer nav {
 	align-items: center;
 }
 
-.body__session_admin p {
+.header__session_admin p {
 	margin: 0 20px 0 0 ;
 }
 
-.body__session_admin button {
+.header__session_admin button {
 	background-color: white;
 	color: black;
 	font-weight: 600;
@@ -308,11 +311,11 @@ footer nav {
 	height: 40px;
 }
 
-.body__session_admin button:hover {
+.header__session_admin button:hover {
 	color:#B1663C;
 }
 
-.body__session_admin button:active {
+.header__session_admin button:active {
 	color:black;
 }
 
@@ -360,11 +363,12 @@ footer nav {
 
 .modal__background {
 	position:absolute;
-	top: 60px;
+	top: -10px;
+	left: -10.5%;
 	bottom : 0;
-	width: 100%;
-	max-width: 1140px;
-	padding: 18% 0 0 0;
+	width: 100vw;
+	max-width: 1440px;
+	padding: 20% 0 0 0;
 	background-color: rgba(0, 0, 0, 0.3);
 	display: flex;
 	align-items:start ;
@@ -372,8 +376,7 @@ footer nav {
 }
 
 .modal__window {
-	width: 55%;
-	height: auto;
+	width: 630px;
 	background-color: white;
 	border-radius: 10px;
 	padding: 60px 100px 50px 100px;
@@ -389,7 +392,8 @@ h3 {
 
 hr {
 	color:#B3B3B3;
-	width: 66%;
+	width: 420px;
+	margin: 50px auto 40px auto;
 }
 
 .modal__header {
@@ -425,7 +429,6 @@ hr {
 }
 
 .modal__gallery__main {
-	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
 }
