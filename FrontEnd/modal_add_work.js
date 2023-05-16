@@ -3,7 +3,9 @@
 * OK : sur le bouton + Ajouter photo : aller chercher l'image souhaitée en local,
 * OK: la faire apparaitre dans le cadre
 *
-* changer le bouton valider de inactive à active une fois que tous les champs sont remplis. Si la class contient "active" donner la possibilité de déclencher la fonction pour poster sur l'API
+* changer le bouton valider de inactive à active une fois que tous les champs sont remplis. 
+*   Si la class contient "active" donner la possibilité de déclencher la fonction pour poster sur l'API
+* 
 * regrouper toutes les infos dans un objet (format JSON? très probablement) à poster avec fetch
 * poster la nouvelle image et sa catégorie sur l'API, attention : à la bonne adresse!
 
@@ -20,11 +22,14 @@
       ou seulement comme l'exemple sur le swagger? :
         "id": 0,
         "title": "string",
-        "imageUrl": "string",
+        "imageUrl": "string", rien
         "categoryId": "string",
         "userId": 0
-
+* Penser à mettre le token en autorisation
 * faire s'afficher la page d'accueil à jour
+
+Pour envoyer des données, il faut utilise l'API form data
+
 */
 
 import { categories } from "./home.js"
@@ -116,13 +121,13 @@ function findNewPhoto() {
         image = null;
         return;
     };
-
+    // Rappel : 4 Mo = 4194304 o
     if (image.size > 4194304) {
         alert("fichier trop volumineux");
         image = null;
         return;
     }
-    // Rappel : 4 Mo = 4194304 o
+    
     
     //Aperçu de la photo uploadée
     const imageURL = window.URL.createObjectURL(image);
@@ -131,11 +136,13 @@ function findNewPhoto() {
         imagePreview.style.margin = "0";
         imagePreview.style.width = "35%";
 
-    const previewNewWork = document.querySelector(".addWork_image_container");
-    previewNewWork.innerHTML="";
-    previewNewWork.appendChild(imagePreview);
-    previewNewWork.style.padding = "0";
-    // URL.revokeObjectURL() : A utiliser à la fin lorsque l'on aura plus besoin de l'URL de l'objet, après le post sur l'API
+        imagePreview.onload = () => {
+            URL.revokeObjectURL(image)
+            const previewNewWork = document.querySelector(".addWork_image_container");
+            previewNewWork.innerHTML="";
+            previewNewWork.appendChild(imagePreview);
+                previewNewWork.style.padding = "0";
+        };
 }
 
 function modifyValidateButton() {
@@ -149,7 +156,17 @@ function modifyValidateButton() {
         } else {
             console.log(`Pas de valeur pour ${requiredElement}`)
             validateButton.classList.replace("modal__addWork__validate_active", "modal__addWork__validate_inactive");
+            requiredElements[0].value ? null : validateButton.classList.replace("modal__addWork__validate_active", "modal__addWork__validate_inactive");
         }
     };
 }
 
+
+// function checkEntries() {
+//     if (imgOk && titleOk && categoryOk) {
+//       document.querySelector(".modal-addwork input[type=submit]").disabled = false;
+//     } else {
+//       document.querySelector(".modal-addwork input[type=submit]").disabled = true;
+//     }
+//   }
+// checkentries
