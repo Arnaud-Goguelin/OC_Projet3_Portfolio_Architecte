@@ -97,13 +97,13 @@
 			</form>
 		</section>
 
-		<template id="modal">
+		<template id = "modal">
 
-			<div class="modal__background">
-				<div class="modal__window">
-					<div class="modal__header">
-						<button class="modal__previous_button" style="visibility: hidden;"><i class="fa-solid fa-arrow-left"></i></button>
-						<button class="modal__close_button"><i class="fa-solid fa-xmark"></i></button>
+			<div class = "modal__background">
+				<div class = "modal__window">
+					<div class = "modal__header">
+						<button class = "modal__previous_button" style = "visibility: hidden;"><i class="fa-solid fa-arrow-left"></i></button>
+						<button class = "modal__close_button"><i class = "fa-solid fa-xmark"></i></button>
 					</div>
 
 					<template id = "modal__window__gallery" >
@@ -112,11 +112,11 @@
 							<div class = "modal__gallery__title">
 								<h3>Gallerie Photo</h3>
 							</div>
-							<div class="modal__gallery__main">
+							<div class = "modal__gallery__main">
 							</div>
 							<hr>
-							<div class="modal__gallery__footer">
-								<button id ="modal__gallery__addWork">Ajoutter une photo</button>
+							<div class = "modal__gallery__footer">
+								<button id ="modal__gallery__addWork">Ajouter une photo</button>
 								<button id = "modal__gallery__delete_gallery">Supprimer la galerie</button>
 							</div>
 						</div>
@@ -125,25 +125,26 @@
 
 					<template id = "modal__window__addWork">
 
-						<div class="modal__addWork__container">
+						<div class ="modal__addWork__container">
 							<div class = "modal__addWork__header">
 								<h3>Ajout Photo</h3>
 							</div>
 							<div class = "modal__addWork__main">
 								<div class = "addWork_image_container">
-									<img src="assets/icons/image.png" alt="dessin d'image">
-									<button id = "modal__addWork_addPhotoButton">+ Ajouter photo</button>
+									<img src ="assets/icons/image.png" alt = "dessin d'image">
+									<label for ="modal__addWork_addPhotoInput" id = "modal__addWork_addPhotoLabel">+ Ajouter photo</label>
+									<input type = "file" name = "addPhotoInput" id = "modal__addWork_addPhotoInput" accept=".jpg, .png" style = "opacity: 0;">
 									<p>jpg, png : 4mo max</p>
 								</div>
-								<form action="#" method="post" id="form__newWork" >
-									<label for="titel">Titre</label>
-									<input type="text" name="title" id="newWorkTitle">
-									<label for="category">Catégorie</label>
-									<select name="category" id="newWorkCategory"></select>
+								<form action = "#" method="post" id="form__newWork" >
+									<label for = "titel">Titre</label>
+									<input type = "text" name="title" id="newWorkTitle" required="required">
+									<label for = "category">Catégorie</label>
+									<select name = "categories" id = "workCategories" required="required"></select>
 								</form>
 							</div>
 							<hr>
-							<div class="modal__addWork__footer">
+							<div class = "modal__addWork__footer">
 								<button id ="modal__addWork__validate" class = "modal__addWork__validate_inactive">Valider</button>
 							</div>
 						</div>

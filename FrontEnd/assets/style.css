@@ -223,7 +223,7 @@ nav img:hover {
 	margin-bottom: 20px;
 }
 
-#contac__form {
+#contac__form, #form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
@@ -356,7 +356,7 @@ footer nav {
 	display:none;
 }
 
-/* Code modal */
+/* Code de la gallerie de la modale */
 
 .modal__background {
 	position:absolute;
@@ -482,7 +482,7 @@ hr {
 
 #modal__gallery__addWork {
 	background-color: #1D6154;
-	font-size: 17px;
+	font-size: 14px;
 	font-weight: 700;
 	color: white;
 }
@@ -493,23 +493,25 @@ hr {
 	font-weight: 400;
 }
 
+/* Code 2e modale pour l'ajout d'un work */
+
 .addWork_image_container {
 	background-color: #E8F1F6;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
+	justify-content: center;
 	padding: 30px 0 20px 0;
 	margin: 0 0 30px 0;
 }
 
 .addWork_image_container img {
 	width: 15%;
-	margin: 0 0 10px 0;
+	margin: 0 0 20px 0;
 }
 
-#modal__addWork_addPhotoButton {
-	width: 40%;
+#modal__addWork_addPhotoLabel {
 	border: none;
 	background-color: #CBD6DC;
 	padding: 10px 30px;
@@ -518,7 +520,6 @@ hr {
 	color: #306685;
 	font-size: 14px;
 	font-weight: 500;
-	margin: 10px 0px;
 }
 
 #form__newWork {
@@ -528,10 +529,14 @@ hr {
 }
 
 #form__newWork label {
-	font-family: 'Work sans';
+	font-family: 'Work Sans';
 	font-size: 14px;
 	font-weight: 500;
 	margin: 0 0 10px 0;
+}
+
+#form__newWork {
+	font-family: 'Work Sans';
 }
 
 #form__newWork input, #form__newWork select {
@@ -540,7 +545,6 @@ hr {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	padding: 18px 15px;
 	margin: 0 0 20px 0;
-	font-family: 'Work sans';
 	font-size: 14px;
 	font-weight: 400;
 }
@@ -565,4 +569,8 @@ hr {
 
 .modal__addWork__validate_inactive {
 	background-color: #A7A7A7;
+}
+
+.modal__addWork__validate_active {
+	background-color: #1D6154;
 }
