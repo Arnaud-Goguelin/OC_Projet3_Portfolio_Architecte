@@ -40,7 +40,6 @@ export function createWorks(works) {
 
 createWorks(works);
 
-
 /* Création d'un affichage dynamique des boutons :
 *
 * L'intérêt est de créer un affichage dynamique des boutons filtres en fonction des noms catégories des projets, 

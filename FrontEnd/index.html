@@ -56,8 +56,10 @@
 
 			<figure>
 				<img src="./assets/images/sophie-bluel.png" alt="">
-				<button class="introduction__session_admin session_admin_inactive"><i
-						class="fa-regular fa-pen-to-square"></i>modifier</button>
+				<button class="introduction__session_admin session_admin_inactive">
+					<i class="fa-regular fa-pen-to-square"></i>
+					modifier
+				</button>
 			</figure>
 
 			<article>
@@ -74,6 +76,7 @@
 		</section>
 
 		<section id="portfolio">
+
 			<div class="portfolio__title">
 				<h2>Mes Projets</h2>
 				<button class="portfolio__session_admin"><i class="fa-regular fa-pen-to-square"></i>modifier</button>
@@ -88,8 +91,10 @@
 		</section>
 
 		<section id="contact">
+
 			<h2>Contact</h2>
 			<p>Vous avez un projet ? Discutons-en !</p>
+
 			<form action="#" method="post" id="contac__form">
 				<label for="name">Nom</label>
 				<input type="text" name="name" id="name">
@@ -99,12 +104,15 @@
 				<textarea name="message" id="message" cols="30" rows="10"></textarea>
 				<input type="submit" value="Envoyer">
 			</form>
+
 		</section>
 
 		<template id = "modal">
 
 			<div class = "modal__background">
+
 				<div class = "modal__window">
+
 					<div class = "modal__header">
 						<button class = "modal__previous_button" style = "visibility: hidden;"><i class="fa-solid fa-arrow-left"></i></button>
 						<button class = "modal__close_button"><i class = "fa-solid fa-xmark"></i></button>
@@ -113,16 +121,21 @@
 					<template id = "modal__window__gallery" >
 						
 						<div class ="modal__gallery__container">
+
 							<div class = "modal__gallery__title">
 								<h3>Gallerie Photo</h3>
 							</div>
+
 							<div class = "modal__gallery__main">
 							</div>
+
 							<hr>
+
 							<div class = "modal__gallery__footer">
 								<button id ="modal__gallery__addWork">Ajouter une photo</button>
 								<button id = "modal__gallery__delete_gallery">Supprimer la galerie</button>
 							</div>
+
 						</div>
 
 					</template>
@@ -130,35 +143,47 @@
 					<template id = "modal__window__addWork">
 
 						<div class ="modal__addWork__container">
+
 							<div class = "modal__addWork__header">
 								<h3>Ajout Photo</h3>
 							</div>
+
 							<div class = "modal__addWork__main">
-								<form action = "#" method="post" id="form__newWork" ></form>
+
+								<form action = "" method="post" name = "form__newWork" id="form__newWork" >
+
 									<div class = "addWork_image_container">
 										<img src ="assets/icons/image.png" alt = "dessin d'image">
 										<label for ="modal__addWork_addPhotoInput" id = "modal__addWork_addPhotoLabel">+ Ajouter photo</label>
-										<input type = "file" name = "addPhotoInput" id = "modal__addWork_addPhotoInput" accept=".jpg, .png" style = "opacity: 0;" required="required">
+										<input type = "file" name = "newWorkImage" id = "modal__addWork_addPhotoInput" accept=".jpg, .png" style = "opacity: 0;" required="required">
 										<p>jpg, png : 4mo max</p>
 									</div>
+
 									<div class = "addWork_text_container">
-										<label for = "titel">Titre</label>
-										<input type = "text" name="title" id="newWorkTitle" required="required">
-										<label for = "category">Catégorie</label>
-										<select name = "categories" id = "newWorkCategory" required="required"></select>
+										<label for = "newWorkTitle">Titre</label>
+										<input type = "text" name="newWorkTitle" id="newWorkTitle" required="required">
+										<label for = "newWorkCategory">Catégorie</label>
+										<select name = "newWorkCategory" id = "newWorkCategory" required="required"></select>
 									</div>
+
 								</form>
+
 							</div>
+
 							<hr>
+
 							<div class = "modal__addWork__footer">
 								<input type = "submit" id ="modal__addWork__validate" value = "Valider" disabled = "true">
 							</div>
+
 						</div>
 
 					</template>
 
 				</div>
+
 			</div>
+
 		</template>
 
 	</main>

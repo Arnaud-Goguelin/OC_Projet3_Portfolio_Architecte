@@ -3,11 +3,10 @@
 * OK : sur le bouton + Ajouter photo : aller chercher l'image souhaitée en local,
 * OK: la faire apparaitre dans le cadre
 *
-* changer le bouton valider de disabled à enabled une fois que tous les champs sont remplis. 
+* OK: changer le bouton valider de disabled à enabled une fois que tous les champs sont remplis. 
 *
 * regrouper toutes les infos dans un objet à poster avec fetch
 * poster la nouvelle image et sa catégorie sur l'API au clic sur le bouton "Valider", attention : à la bonne adresse!
-* Pour envoyer des données, il faut utilise l'API form data
 
 * Cf le swagger pour les infos à fournir :
     image
@@ -21,10 +20,10 @@
 
 * /!\ Penser à mettre le token en autorisation /!\
 * faire s'afficher la page d'accueil à jour ou la gallerie de la modale à jour.
-
+* créer une pop up pour les messages d'alertes plutôt que d'utiliser "alerte".
 */
 
-import { categories } from "./home.js"
+import { categories, token, createWorks } from "./home.js"
 import { openModal } from "./modal_open_close.js"
 
 let newWorkImageOk = null;
@@ -72,6 +71,9 @@ export function openAddWorkModal() {
     // Activation du bouton "valider" une fois que tous les champs sont remplis
     const requiredElements = document.querySelectorAll(":required");
     requiredElements.forEach(requiredElement => requiredElement.addEventListener("change", checkEntries));
+
+    const validateButton = document.querySelector("#modal__addWork__validate");
+    validateButton.addEventListener("click", sendNewWork);
 }
 
 //Fonction pour revenir à la première modale "Gallerie Photo" (efface l'intégralité de la modale et l'affiche à nouveau)
@@ -104,9 +106,9 @@ function createNewCategory() {
     };
 }
 
-//Traitement du fichier uploadé dans la balise input pour l'ajout d'une nouvelle photo pour un nouveau work
+//Traitement du fichier téléchargé dans la balise input pour l'ajout d'une nouvelle photo pour un nouveau work
 function findNewImage() {
-    //Récupération du fichier uploadé
+    //Récupération du fichier téléchargé
     const inputImage = document.querySelector("#modal__addWork_addPhotoInput")
     let image = inputImage.files[0];
 
@@ -123,7 +125,7 @@ function findNewImage() {
         return;
     };
     
-    //Aperçu de la photo uploadée
+    //Aperçu de l'image téléchargée
     const imageURL = window.URL.createObjectURL(image);
     const imagePreview = document.createElement("img");
         imagePreview.src = imageURL;
@@ -131,20 +133,22 @@ function findNewImage() {
         imagePreview.style.width = "35%";
         imagePreview.dataset.id = "newWorkPreview"
 
-        /* On donne ici une valeur à newWorkImageOk  car si l'on attend le chargement complet de imagePreview,
-        * la fonction checkEntries (cf. ci-dessous) s'exécute avant la fin de findNewImage, et si l'image est rentrée en dernier lors de l'ajout d'un work,
-        * le bouton "Valider" n'est jamais activé.
-        */
+    /* On donne ici une valeur à newWorkImageOk  car si l'on attend le chargement complet de imagePreview,
+    * la fonction checkEntries (cf. ci-dessous) s'exécute avant la fin de findNewImage, et si l'image est rentrée en dernier lors de l'ajout d'un work,
+    * le bouton "Valider" n'est jamais activé.
+    */
 
-        newWorkImageOk = imagePreview;
+    newWorkImageOk = image;
 
-        imagePreview.onload = () => {
-            URL.revokeObjectURL(image)
-            const previewNewWork = document.querySelector(".addWork_image_container");
-            previewNewWork.innerHTML="";
-            previewNewWork.appendChild(imagePreview);
-            previewNewWork.style.padding = "0";
-        };
+    //A la fin du chargement de l'image, on supprime l'URL stockée et on affiche l'image dans son conteneur en masquant les autres éléments (label, input etc etc).
+    //On les garde actifs au lieu de remttre à zéro l'innerHTML pour un autre usage dans la suite du code.
+    imagePreview.onload = () => {
+        URL.revokeObjectURL(image)
+        const imageContainer = document.querySelector(".addWork_image_container");
+        Array.from(imageContainer.children).forEach(child => child.style.display = "none");
+        imageContainer.appendChild(imagePreview);
+        imageContainer.style.padding = "0";
+    };
 }
 
 function checkEntries() {
@@ -157,4 +161,33 @@ function checkEntries() {
     } else {
           document.querySelector("#modal__addWork__validate").disabled = true;
     };
+}
+
+// Envoie des nouvelles données à l'API
+
+async function sendNewWork () {
+
+    //Création du body de la requête fetch sour la forme d'un objet FormData
+    const newWorkForm = document.querySelector("#form__newWork");
+    const newWorkBody = new FormData(newWorkForm);
+    
+    //Envoie du nouveau work
+    const answerAPIPostNewWork = await fetch ("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+            "Authorization" : `Bearer ${token}`,
+            "Content-type" : "multipart/form-data"
+        },
+        body: newWorkBody,
+    });
+
+    console.log(answerAPIPostNewWork);
+
+    //Si la réponse est ok, insertion du nouveau work dans le tableau et MAJ de l'affichage
+    if (answerAPIPostNewWork.ok) {
+        const newWork = answerAPIPostNewWork.json();
+        works.push(newWork);
+        createWorks(works);
+        closeAddWorkModal;
+    }
 }
