@@ -525,24 +525,24 @@ hr {
 	font-weight: 500;
 }
 
-#form__newWork {
+.addWork_text_container {
 	display: flex;
 	flex-direction: column;
 	margin: 0 0 30px 0;
 }
 
-#form__newWork label {
+.addWork_text_container label {
 	font-family: 'Work Sans';
 	font-size: 14px;
 	font-weight: 500;
 	margin: 0 0 10px 0;
 }
 
-#form__newWork {
+.addWork_text_container {
 	font-family: 'Work Sans';
 }
 
-#form__newWork input, #form__newWork select {
+.addWork_text_container input, .addWork_text_container select {
 	border: none;
 	background: #FFFFFF;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
@@ -570,10 +570,10 @@ hr {
 	color: white;
 }
 
-.modal__addWork__validate_inactive {
+#modal__addWork__validate:disabled {
 	background-color: #A7A7A7;
 }
 
-.modal__addWork__validate_active {
+#modal__addWork__validate:enabled {
 	background-color: #1D6154;
 }

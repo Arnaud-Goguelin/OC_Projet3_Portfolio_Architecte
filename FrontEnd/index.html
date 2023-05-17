@@ -134,22 +134,24 @@
 								<h3>Ajout Photo</h3>
 							</div>
 							<div class = "modal__addWork__main">
-								<div class = "addWork_image_container">
-									<img src ="assets/icons/image.png" alt = "dessin d'image">
-									<label for ="modal__addWork_addPhotoInput" id = "modal__addWork_addPhotoLabel">+ Ajouter photo</label>
-									<input type = "file" name = "addPhotoInput" id = "modal__addWork_addPhotoInput" accept=".jpg, .png" style = "opacity: 0;">
-									<p>jpg, png : 4mo max</p>
-								</div>
-								<form action = "#" method="post" id="form__newWork" >
-									<label for = "titel">Titre</label>
-									<input type = "text" name="title" id="newWorkTitle" required="required">
-									<label for = "category">Catégorie</label>
-									<select name = "categories" id = "workCategories" required="required"></select>
+								<form action = "#" method="post" id="form__newWork" ></form>
+									<div class = "addWork_image_container">
+										<img src ="assets/icons/image.png" alt = "dessin d'image">
+										<label for ="modal__addWork_addPhotoInput" id = "modal__addWork_addPhotoLabel">+ Ajouter photo</label>
+										<input type = "file" name = "addPhotoInput" id = "modal__addWork_addPhotoInput" accept=".jpg, .png" style = "opacity: 0;" required="required">
+										<p>jpg, png : 4mo max</p>
+									</div>
+									<div class = "addWork_text_container">
+										<label for = "titel">Titre</label>
+										<input type = "text" name="title" id="newWorkTitle" required="required">
+										<label for = "category">Catégorie</label>
+										<select name = "categories" id = "newWorkCategory" required="required"></select>
+									</div>
 								</form>
 							</div>
 							<hr>
 							<div class = "modal__addWork__footer">
-								<button id ="modal__addWork__validate" class = "modal__addWork__validate_inactive">Valider</button>
+								<input type = "submit" id ="modal__addWork__validate" value = "Valider" disabled = "true">
 							</div>
 						</div>
 
