@@ -150,20 +150,20 @@
 
 							<div class = "modal__addWork__main">
 
-								<form action = "" method="post" name = "form__newWork" id="form__newWork" >
+								<form enctype="multipart/form-data" action = "http://localhost:5678/api/works" method="post" name = "form__newWork" id="form__newWork" >
 
 									<div class = "addWork_image_container">
 										<img src ="assets/icons/image.png" alt = "dessin d'image">
 										<label for ="modal__addWork_addPhotoInput" id = "modal__addWork_addPhotoLabel">+ Ajouter photo</label>
-										<input type = "file" name = "newWorkImage" id = "modal__addWork_addPhotoInput" accept=".jpg, .png" style = "opacity: 0;" required="required">
+										<input type = "file" name = "image" id = "modal__addWork_addPhotoInput" accept=".jpg, .png" style = "opacity: 0;" required="required">
 										<p>jpg, png : 4mo max</p>
 									</div>
 
 									<div class = "addWork_text_container">
 										<label for = "newWorkTitle">Titre</label>
-										<input type = "text" name="newWorkTitle" id="newWorkTitle" required="required">
+										<input type = "text" name="title" id="newWorkTitle" required="required">
 										<label for = "newWorkCategory">Catégorie</label>
-										<select name = "newWorkCategory" id = "newWorkCategory" required="required"></select>
+										<select name = "category" id = "newWorkCategory" required="required"></select>
 									</div>
 
 								</form>

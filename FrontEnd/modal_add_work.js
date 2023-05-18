@@ -1,29 +1,4 @@
-/* TO DO:
-* OK : prévoir un imput dans la liste de choix des catégories pour en saisir une nouvelle
-* OK : sur le bouton + Ajouter photo : aller chercher l'image souhaitée en local,
-* OK: la faire apparaitre dans le cadre
-*
-* OK: changer le bouton valider de disabled à enabled une fois que tous les champs sont remplis. 
-*
-* regrouper toutes les infos dans un objet à poster avec fetch
-* poster la nouvelle image et sa catégorie sur l'API au clic sur le bouton "Valider", attention : à la bonne adresse!
-
-* Cf le swagger pour les infos à fournir :
-    image
-    string($binary)
-	
-    title
-    string
-	
-    category
-    integer($int64)
-
-* /!\ Penser à mettre le token en autorisation /!\
-* faire s'afficher la page d'accueil à jour ou la gallerie de la modale à jour.
-* créer une pop up pour les messages d'alertes plutôt que d'utiliser "alerte".
-*/
-
-import { categories, token, createWorks } from "./home.js"
+import { works, categories, token, createWorks } from "./home.js"
 import { openModal } from "./modal_open_close.js"
 
 let newWorkImageOk = null;
@@ -176,18 +151,18 @@ async function sendNewWork () {
         method: "POST",
         headers: {
             "Authorization" : `Bearer ${token}`,
-            "Content-type" : "multipart/form-data"
         },
         body: newWorkBody,
     });
 
-    console.log(answerAPIPostNewWork);
-
     //Si la réponse est ok, insertion du nouveau work dans le tableau et MAJ de l'affichage
     if (answerAPIPostNewWork.ok) {
-        const newWork = answerAPIPostNewWork.json();
+        //A ce stade la réponse est à parser en objet JS au format JSON. Elle deviendra alors une promesse.
+        //Il faut attendre qu'elle soit résolue avant de l'utiliser comme objet à ajouter à notre tableau "works" d'où l'utilisation de la méthode .then.
+        answerAPIPostNewWork.json().then(newWork  => {
         works.push(newWork);
         createWorks(works);
-        closeAddWorkModal;
+        closeAddWorkModal();
+        })
     }
 }

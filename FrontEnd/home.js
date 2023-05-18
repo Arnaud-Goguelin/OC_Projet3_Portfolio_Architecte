@@ -1,3 +1,12 @@
+/* TO DO:
+
+* créer une pop up pour les messages d'alertes plutôt que d'utiliser "alerte".
+* message d'alerte de la page logins à afficher sur la page elle même ?
+* architecture de test à mettre en place?
+* respect de l'accessibilité du site à mettre en place?
+
+*/
+
 import {openModal} from "./modal_open_close.js"
 
 // Affichage en gras du lien du nav actif
