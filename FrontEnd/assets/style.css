@@ -277,6 +277,16 @@ footer nav {
 	margin: auto;
 }
 
+.message_erreur {
+	color : white;
+	background-color: #930b0b;
+	font-size: 20px;
+	font-weight: 700;
+	margin: 30px auto;
+	padding: 15px 0px;
+	border-radius: 60px;
+}
+
 
 
 /* Code session admin*/

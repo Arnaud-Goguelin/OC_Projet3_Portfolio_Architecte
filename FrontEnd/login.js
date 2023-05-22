@@ -28,7 +28,11 @@ connection.addEventListener("click", async function(event){
             //Redirection vers la page d'accueil, sinon afficher message d'erreur
             window.location.href = "index.html";
         }else{
-            alert("Erreur dans l'email ou le mot de passe.");
+            const mainContainer = document.querySelector("#login");
+            const errorMessage = document.createElement("p");
+            errorMessage.innerText="Erreur dans l'email ou le mot de passe.";
+            errorMessage.classList.add("message_erreur");
+            mainContainer.appendChild(errorMessage);
         };
         } catch (error) {
             console.error(error);
