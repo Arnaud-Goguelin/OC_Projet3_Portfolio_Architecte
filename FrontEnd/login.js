@@ -31,7 +31,7 @@ connection.addEventListener("click", async function(event){
             const mainContainer = document.querySelector("#login");
             const errorMessage = document.createElement("p");
             errorMessage.innerText="Erreur dans l'email ou le mot de passe.";
-            errorMessage.classList.add("message_erreur");
+            errorMessage.classList.add("error_message");
             mainContainer.appendChild(errorMessage);
         };
         } catch (error) {
