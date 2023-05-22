@@ -1,6 +1,7 @@
 /* TO DO:
 
 * créer une pop up pour les messages d'alertes plutôt que d'utiliser "alerte".
+* message d'alerte lors de la création d'un nouveau work à mettre en place (s'il manque une valeur, si la taille ou le format de la photo ne sont pas bons)
 * message d'alerte de la page logins à afficher sur la page elle même ?
 * architecture de test à mettre en place?
 * respect de l'accessibilité du site à mettre en place?

@@ -1,9 +1,10 @@
 import { works, categories, token, createWorks } from "./home.js"
 import { openModal } from "./modal_open_close.js"
 
-let newWorkImageOk = null;
-let newWorkTitleOk = null;
-let newWorkCategoryOk = null;
+let newWorkImage = null;
+let newWorkTitle = null;
+let newWorkCategory = null;
+let everythingIsOk = null;
 
 export function openAddWorkModal() {
     // Effacement de l'intégralité du contenu de la fenêtre de la modale après le modal__header
@@ -30,6 +31,7 @@ export function openAddWorkModal() {
             option.text = category.id === 0 ? "" : category.name;
 
             formCategory.add(option, null);
+            formCategory[0].disabled = true;
     }
 
     //Ajout d'une possibilité de créer une nouvelle catégorie
@@ -39,7 +41,7 @@ export function openAddWorkModal() {
     
     formCategory.addEventListener("change", createNewCategory);
     
-    //Traitement du document uploader pour l'ajout de la photo
+    //Vérification et traitement du document chargé pour l'ajout de la photo
     const addPhotoButton = document.querySelector("#modal__addWork_addPhotoInput");
     addPhotoButton.addEventListener("change", findNewImage);
 
@@ -85,40 +87,38 @@ function createNewCategory() {
 function findNewImage() {
     //Récupération du fichier téléchargé
     const inputImage = document.querySelector("#modal__addWork_addPhotoInput")
-    let image = inputImage.files[0];
 
-    //Deuxième filtre du type de fichier et de la taille maximale accepté malgré l'attribut "accept" dans le code HTML
-    if (image.type !== "image/jpeg" && image.type !== "image/png")  {
-        alert("mauvais format de fichier");
-        image = null;
-        return;
-    };
+    /* On donne ici une valeur à newWorkImageOk  car si l'on attend le chargement complet de imagePreview,
+    * la fonction checkEntries (cf. ci-dessous) s'exécute avant la fin de findNewImage, 
+    * et si l'image est rentrée en dernier lors de l'ajout d'un work,
+    * le bouton "Valider" n'est jamais activé.
+    */
+    newWorkImage = inputImage.files[0];
+
+    //Vérification du format et de la taille de l'image
+    if (newWorkImage.type !== "image/jpeg" && newWorkImage.type !== "image/png") {
+        displayErrorMessage(`Format du fichier incorrect.<br><br>Format requis : <span style = "font-style: italic;">.jpeg</span> ou <span style = "font-style: italic;">.png</span>.`);
+        newWorkImage = null;
+    }
+
     // Rappel : 4 Mo = 4194304 o
-    if (image.size > 4194304) {
-        alert("fichier trop volumineux");
-        image = null;
-        return;
-    };
-    
+    if (newWorkImage.size > 4194304) {
+        displayErrorMessage(`Taille du fichier trop importante.<br><br>Taille maximale autorisée : 4 Mo.`);
+        newWorkImage = null;
+    }
+
     //Aperçu de l'image téléchargée
-    const imageURL = window.URL.createObjectURL(image);
+    const imageURL = window.URL.createObjectURL(newWorkImage);
     const imagePreview = document.createElement("img");
         imagePreview.src = imageURL;
         imagePreview.style.margin = "0";
         imagePreview.style.width = "35%";
         imagePreview.dataset.id = "newWorkPreview"
 
-    /* On donne ici une valeur à newWorkImageOk  car si l'on attend le chargement complet de imagePreview,
-    * la fonction checkEntries (cf. ci-dessous) s'exécute avant la fin de findNewImage, et si l'image est rentrée en dernier lors de l'ajout d'un work,
-    * le bouton "Valider" n'est jamais activé.
-    */
-
-    newWorkImageOk = image;
-
     //A la fin du chargement de l'image, on supprime l'URL stockée et on affiche l'image dans son conteneur en masquant les autres éléments (label, input etc etc).
-    //On les garde actifs au lieu de remttre à zéro l'innerHTML pour un autre usage dans la suite du code.
+    //On les garde actifs au lieu de remttre à zéro l'innerHTML du conteneur pour un autre usage dans la suite du code.
     imagePreview.onload = () => {
-        URL.revokeObjectURL(image)
+        URL.revokeObjectURL(newWorkImage)
         const imageContainer = document.querySelector(".addWork_image_container");
         Array.from(imageContainer.children).forEach(child => child.style.display = "none");
         imageContainer.appendChild(imagePreview);
@@ -127,42 +127,111 @@ function findNewImage() {
 }
 
 function checkEntries() {
-    
-    newWorkTitleOk = document.querySelector("#newWorkTitle").value;
-    newWorkCategoryOk = document.querySelector("#newWorkCategory").value;
 
-    if (newWorkImageOk && newWorkTitleOk && newWorkCategoryOk) {
-          document.querySelector("#modal__addWork__validate").disabled = false;
-    } else {
-          document.querySelector("#modal__addWork__validate").disabled = true;
+    const inputImage = document.querySelector("#modal__addWork_addPhotoInput")
+    
+    newWorkImage = inputImage.files[0];
+    newWorkTitle = document.querySelector("#newWorkTitle");
+    newWorkCategory = document.querySelector("#newWorkCategory");
+
+    if (newWorkImage && newWorkTitle.value && newWorkCategory.value) {
+          document.querySelector("#modal__addWork__validate").style.background = "#1D6154";
+    }else{
+        document.querySelector("#modal__addWork__validate").style.background = "#A7A7A7";
     };
 }
 
 // Envoie des nouvelles données à l'API
 
-async function sendNewWork () {
+async function sendNewWork() {
 
-    //Création du body de la requête fetch sour la forme d'un objet FormData
-    const newWorkForm = document.querySelector("#form__newWork");
-    const newWorkBody = new FormData(newWorkForm);
+    lastCheck();
+    console.log(everythingIsOk)
+   
+    if (everythingIsOk) {
+        //Création du body de la requête fetch sour la forme d'un objet FormData
+        const newWorkForm = document.querySelector("#form__newWork");
+        const newWorkBody = new FormData(newWorkForm);
     
-    //Envoie du nouveau work
-    const answerAPIPostNewWork = await fetch ("http://localhost:5678/api/works", {
-        method: "POST",
-        headers: {
-            "Authorization" : `Bearer ${token}`,
-        },
-        body: newWorkBody,
-    });
+        //Envoie du nouveau work
+        const answerAPIPostNewWork = await fetch ("http://localhost:5678/api/works", {
+            method: "POST",
+            headers: {
+                "Authorization" : `Bearer ${token}`,
+            },
+            body: newWorkBody,
+        });
 
-    //Si la réponse est ok, insertion du nouveau work dans le tableau et MAJ de l'affichage
-    if (answerAPIPostNewWork.ok) {
-        //A ce stade la réponse est à parser en objet JS au format JSON. Elle deviendra alors une promesse.
-        //Il faut attendre qu'elle soit résolue avant de l'utiliser comme objet à ajouter à notre tableau "works" d'où l'utilisation de la méthode .then.
-        answerAPIPostNewWork.json().then(newWork  => {
-        works.push(newWork);
-        createWorks(works);
-        closeAddWorkModal();
+        //Si la réponse est ok, insertion du nouveau work dans le tableau et MAJ de l'affichage
+        if (answerAPIPostNewWork.ok) {
+            /*A ce stade la réponse est à parser en objet JS au format JSON. Elle deviendra alors une promesse.
+            *Il faut attendre qu'elle soit résolue avant de l'utiliser comme objet à ajouter à notre tableau "works",
+            * d'où l'utilisation de la méthode .then.
+            */
+            answerAPIPostNewWork.json().then(newWork  => {
+            works.push(newWork);
+            createWorks(works);
+            closeAddWorkModal();
+            everythingIsOk = null;
+            });
+        };
+    };
+}  
+
+//Affichage de messages d'erreurs en cas de données manquantes
+function lastCheck() {
+
+    const inputImage = document.querySelector("#modal__addWork_addPhotoInput")
+
+    newWorkImage = inputImage.files[0];
+    newWorkTitle = document.querySelector("#newWorkTitle");
+    newWorkCategory = document.querySelector("#newWorkCategory");
+
+    inputImage.files.length === 0 ? displayErrorMessage(`Aucun fichier sélectionné.<br><br>Une image est requise pour ajouter un projet.`) : null;
+
+    newWorkTitle.value === "" ? displayErrorMessage(`Aucun titre saisi.<br><br>Un titre est requis pour ajouter un projet.`) : null;
+
+    newWorkCategory.value === "" ? displayErrorMessage(`Aucune catégorie sélectionnée.<br><br>Une catégorie est requise pour ajouter un projet.`) : null;
+
+    const errorMessage = document.querySelector(".error_message");
+
+    if (errorMessage) {
+    closeErrorMessage();
+    }else{
+    everythingIsOk ++;
+    return console.log(everythingIsOk)
+    }
+}
+
+
+function displayErrorMessage(ErrorMessage) {
+
+    //On masque les éléments de la fenêtre de la modal pour afficher le message d'erreur
+    const popUp = document.querySelector(".modal__addWork__main");
+    popUp.children[0].style.display = "none";
+    const errorMessage = document.createElement("p")
+    errorMessage.innerHTML = ErrorMessage;
+    errorMessage.classList.add("error_message");
+    popUp.appendChild(errorMessage);
+};
+
+function closeErrorMessage() {
+
+    const errorMessage = document.querySelector(".error_message");
+    if (errorMessage) {
+     //Création d'un bouton de fermeture du message d'erreur
+        const popUp = document.querySelector(".modal__addWork__main");
+        const marker = document.querySelector(".marker");
+        const closeErrorMessage = document.createElement("button");
+        closeErrorMessage.textContent="Fermer";
+
+        popUp.parentElement.insertBefore(closeErrorMessage, marker);
+    
+        const errorMessages = document.querySelectorAll(".error_message")
+        closeErrorMessage.addEventListener("click", () => {
+            errorMessages.forEach (errorMessage => errorMessage.remove());
+            closeErrorMessage.remove();
+            popUp.children[0].style.display = null;
         })
     }
 }

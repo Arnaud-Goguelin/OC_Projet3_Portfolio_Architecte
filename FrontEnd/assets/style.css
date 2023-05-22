@@ -277,14 +277,14 @@ footer nav {
 	margin: auto;
 }
 
-.message_erreur {
-	color : white;
-	background-color: #930b0b;
-	font-size: 20px;
+.error_message {
+	border-bottom: solid 2px #930b0b;
+	color : #930b0b;
+	font-size: 16px;
 	font-weight: 700;
 	margin: 30px auto;
-	padding: 15px 0px;
-	border-radius: 60px;
+	padding: 15px 30px;
+	text-align: center;
 }
 
 
@@ -380,12 +380,10 @@ footer nav {
 	max-width: 1440px;
 	padding: 20% 0 0 0;
 	background-color: rgba(0, 0, 0, 0.3);
-	display: flex;
-	align-items:start ;
-	justify-content: center;
 }
 
 .modal__window {
+	margin : 0 auto;
 	width: 630px;
 	background-color: white;
 	border-radius: 10px;
@@ -508,6 +506,29 @@ hr {
 
 /* Code 2e modale pour l'ajout d'un work */
 
+.modal__addWork__container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.modal__addWork__container button {
+	width: 30%;
+	margin: 0 auto;
+	padding: 10px 45px 10px 45px;
+	border: none;
+	border-radius: 60px;
+	font-family: 'Syne';
+	font-size: 16px;
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+}
+
+.modal__addWork__main {
+	width: 80%;
+}
+
 .addWork_image_container {
 	background-color: #E8F1F6;
 	display: flex;
@@ -565,12 +586,12 @@ hr {
 .modal__addWork__footer {
 	display: flex;
 	justify-content: center;
+	width: 100%;
 }
 
 #modal__addWork__validate {
-	align-self: center;
+	background-color:#A7A7A7;
 	width: 40%;
-	margin: 10px 0;
 	padding: 10px 45px 10px 45px;
 	border: none;
 	border-radius: 60px;
@@ -578,12 +599,4 @@ hr {
 	font-size: 14px;
 	font-weight: 700;
 	color: white;
-}
-
-#modal__addWork__validate:disabled {
-	background-color: #A7A7A7;
-}
-
-#modal__addWork__validate:enabled {
-	background-color: #1D6154;
 }
