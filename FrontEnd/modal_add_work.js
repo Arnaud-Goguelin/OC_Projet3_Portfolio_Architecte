@@ -1,9 +1,6 @@
 import { works, categories, token, createWorks } from "./home.js"
 import { openModal } from "./modal_open_close.js"
 
-let newWorkImage = null;
-let newWorkTitle = null;
-let newWorkCategory = null;
 let everythingIsOk = null;
 
 export function openAddWorkModal() {
@@ -88,12 +85,7 @@ function findNewImage() {
     //Récupération du fichier téléchargé
     const inputImage = document.querySelector("#modal__addWork_addPhotoInput")
 
-    /* On donne ici une valeur à newWorkImageOk  car si l'on attend le chargement complet de imagePreview,
-    * la fonction checkEntries (cf. ci-dessous) s'exécute avant la fin de findNewImage, 
-    * et si l'image est rentrée en dernier lors de l'ajout d'un work,
-    * le bouton "Valider" n'est jamais activé.
-    */
-    newWorkImage = inputImage.files[0];
+    const newWorkImage = inputImage.files[0];
 
     //Vérification du format et de la taille de l'image
     if (newWorkImage.type !== "image/jpeg" && newWorkImage.type !== "image/png") {
@@ -129,12 +121,10 @@ function findNewImage() {
 function checkEntries() {
 
     const inputImage = document.querySelector("#modal__addWork_addPhotoInput")
-    
-    newWorkImage = inputImage.files[0];
-    newWorkTitle = document.querySelector("#newWorkTitle");
-    newWorkCategory = document.querySelector("#newWorkCategory");
+    const newWorkTitle = document.querySelector("#newWorkTitle");
+    const newWorkCategory = document.querySelector("#newWorkCategory");
 
-    if (newWorkImage && newWorkTitle.value && newWorkCategory.value) {
+    if (inputImage.files.length != 0 && newWorkTitle.value && newWorkCategory.value) {
           document.querySelector("#modal__addWork__validate").style.background = "#1D6154";
     }else{
         document.querySelector("#modal__addWork__validate").style.background = "#A7A7A7";
@@ -146,7 +136,6 @@ function checkEntries() {
 async function sendNewWork() {
 
     lastCheck();
-    console.log(everythingIsOk)
    
     if (everythingIsOk) {
         //Création du body de la requête fetch sour la forme d'un objet FormData
@@ -182,10 +171,8 @@ async function sendNewWork() {
 function lastCheck() {
 
     const inputImage = document.querySelector("#modal__addWork_addPhotoInput")
-
-    newWorkImage = inputImage.files[0];
-    newWorkTitle = document.querySelector("#newWorkTitle");
-    newWorkCategory = document.querySelector("#newWorkCategory");
+    const newWorkTitle = document.querySelector("#newWorkTitle");
+    const newWorkCategory = document.querySelector("#newWorkCategory");
 
     inputImage.files.length === 0 ? displayErrorMessage(`Aucun fichier sélectionné.<br><br>Une image est requise pour ajouter un projet.`) : null;
 
@@ -198,8 +185,7 @@ function lastCheck() {
     if (errorMessage) {
     closeErrorMessage();
     }else{
-    everythingIsOk ++;
-    return console.log(everythingIsOk)
+    return everythingIsOk ++;
     }
 }
 
