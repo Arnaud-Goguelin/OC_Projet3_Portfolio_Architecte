@@ -74,7 +74,7 @@ function createNewCategory() {
             newCategoryInput.dataset.name = "newCategoryInput";
             newCategoryInput.dataset.id = "newCategoryInput";
 
-            formCategory.style.display = "none"
+            formCategory.style.display = "none";
             modalFormNewWork.appendChild(newCategoryInput);
             newCategoryInput.focus();
     };
@@ -83,7 +83,7 @@ function createNewCategory() {
 //Traitement du fichier téléchargé dans la balise input pour l'ajout d'une nouvelle photo pour un nouveau work
 function findNewImage() {
     //Récupération du fichier téléchargé
-    const inputImage = document.querySelector("#modal__addWork_addPhotoInput")
+    const inputImage = document.querySelector("#modal__addWork_addPhotoInput");
 
     const newWorkImage = inputImage.files[0];
 
@@ -105,12 +105,12 @@ function findNewImage() {
         imagePreview.src = imageURL;
         imagePreview.style.margin = "0";
         imagePreview.style.width = "35%";
-        imagePreview.dataset.id = "newWorkPreview"
+        imagePreview.dataset.id = "newWorkPreview";
 
     //A la fin du chargement de l'image, on supprime l'URL stockée et on affiche l'image dans son conteneur en masquant les autres éléments (label, input etc etc).
     //On les garde actifs au lieu de remttre à zéro l'innerHTML du conteneur pour un autre usage dans la suite du code.
     imagePreview.onload = () => {
-        URL.revokeObjectURL(newWorkImage)
+        URL.revokeObjectURL(newWorkImage);
         const imageContainer = document.querySelector(".addWork_image_container");
         Array.from(imageContainer.children).forEach(child => child.style.display = "none");
         imageContainer.appendChild(imagePreview);
@@ -120,7 +120,7 @@ function findNewImage() {
 
 function checkEntries() {
 
-    const inputImage = document.querySelector("#modal__addWork_addPhotoInput")
+    const inputImage = document.querySelector("#modal__addWork_addPhotoInput");
     const newWorkTitle = document.querySelector("#newWorkTitle");
     const newWorkCategory = document.querySelector("#newWorkCategory");
 
@@ -150,7 +150,9 @@ async function sendNewWork() {
             },
             body: newWorkBody,
         });
-
+        
+        everythingIsOk = null;
+    
         //Si la réponse est ok, insertion du nouveau work dans le tableau et MAJ de l'affichage
         if (answerAPIPostNewWork.ok) {
             /*A ce stade la réponse est à parser en objet JS au format JSON. Elle deviendra alors une promesse.
@@ -161,7 +163,6 @@ async function sendNewWork() {
             works.push(newWork);
             createWorks(works);
             closeAddWorkModal();
-            everythingIsOk = null;
             });
         };
     };
@@ -170,7 +171,7 @@ async function sendNewWork() {
 //Affichage de messages d'erreurs en cas de données manquantes
 function lastCheck() {
 
-    const inputImage = document.querySelector("#modal__addWork_addPhotoInput")
+    const inputImage = document.querySelector("#modal__addWork_addPhotoInput");
     const newWorkTitle = document.querySelector("#newWorkTitle");
     const newWorkCategory = document.querySelector("#newWorkCategory");
 
@@ -186,7 +187,7 @@ function lastCheck() {
     closeErrorMessage();
     }else{
     return everythingIsOk ++;
-    }
+    };
 }
 
 
@@ -195,7 +196,7 @@ function displayErrorMessage(ErrorMessage) {
     //On masque les éléments de la fenêtre de la modal pour afficher le message d'erreur
     const popUp = document.querySelector(".modal__addWork__main");
     popUp.children[0].style.display = "none";
-    const errorMessage = document.createElement("p")
+    const errorMessage = document.createElement("p");
     errorMessage.innerHTML = ErrorMessage;
     errorMessage.classList.add("error_message");
     popUp.appendChild(errorMessage);
@@ -218,6 +219,6 @@ function closeErrorMessage() {
             errorMessages.forEach (errorMessage => errorMessage.remove());
             closeErrorMessage.remove();
             popUp.children[0].style.display = null;
-        })
-    }
+        });
+    };
 }

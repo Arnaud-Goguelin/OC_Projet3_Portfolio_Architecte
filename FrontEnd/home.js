@@ -1,14 +1,12 @@
 /* TO DO:
 
-* créer une pop up pour les messages d'alertes plutôt que d'utiliser "alerte".
-* message d'alerte lors de la création d'un nouveau work à mettre en place (s'il manque une valeur, si la taille ou le format de la photo ne sont pas bons)
-* message d'alerte de la page logins à afficher sur la page elle même ?
 * architecture de test à mettre en place?
+* révision de la nommanclature
 * respect de l'accessibilité du site à mettre en place?
 
 */
 
-import {openModal} from "./modal_open_close.js"
+import {openModal} from "./modal_open_close.js";
 
 // Affichage en gras du lien du nav actif
 function boldLink () {
@@ -67,12 +65,12 @@ function createButtonsBox() {
 
     const contenerFilters = document.querySelector(".portfolio__filtres");
     //Ajout d'une catégorie "Tous" dans le tableau categories avec l'id "0"
-    categories.unshift({ id: 0, name: "Tous" })
+    categories.unshift({ id: 0, name: "Tous" });
     //Pour chaque category de categories, création d'un bouton grâche à la fonction createCategoryButton
     for (const category of categories) {
         const buttons = createCategoryButton(category);
         contenerFilters.appendChild(buttons);
-    }
+    };
 }
 
 createButtonsBox();
@@ -104,7 +102,7 @@ function createCategoryButton(category) {
 
 //Gestion de la session admin
 
-export let token = window.sessionStorage.getItem("token");;
+export const token = window.sessionStorage.getItem("token");
 //Stockage de token enregistré dans le sessionStorage (cf.login.js) et déclenchement de la function removeAdminCSSClass s'il n'est pas nul.
 function connectAdminSession(token) {
     token ? displayAdminSession() : null;
@@ -116,7 +114,7 @@ function displayAdminSession() {
     // Suppression de cette classe pour permettre leur affichage (en display none dans le CSS)
     const allAdminSessionElements = document.querySelectorAll(".session_admin_inactive");
     allAdminSessionElements.forEach(
-        adminSessionElement =>  adminSessionElement.classList.remove("session_admin_inactive") );
+        adminSessionElement => adminSessionElement.classList.remove("session_admin_inactive"));
 
     // Sélection de tous les élements du DOM avec la classe ".session_public_active",
     // Suppression de cette classe et ajout de la classe ".session_admin_inactive",
@@ -144,7 +142,7 @@ function hideAdminSession() {
     //Fait l'inverse de displayAdminSession dans la suppression et l'ajout des classes CSS.
     const allPublicSessionElements = document.querySelectorAll(".session_admin_inactive");
     allPublicSessionElements.forEach(
-        publicSessionElement =>  publicSessionElement.classList.remove("session_admin_inactive"));
+        publicSessionElement => publicSessionElement.classList.remove("session_admin_inactive"));
 
     const allAdminSessionElements = document.querySelectorAll(".session_public_active");
     allAdminSessionElements.forEach(
