@@ -1,10 +1,3 @@
-/* TO DO:
-
-* architecture de test à mettre en place?
-* respect de l'accessibilité du site à mettre en place?
-
-*/
-
 import {openModal} from "./modal_open_close.js";
 
 // Affichage en gras du lien du nav actif
