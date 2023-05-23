@@ -85,22 +85,24 @@ function findNewImage() {
     //Récupération du fichier téléchargé
     const inputImage = document.querySelector("#modal__addWork_addPhotoInput");
 
-    const newWorkImage = inputImage.files[0];
-
-    //Vérification du format et de la taille de l'image
-    if (newWorkImage.type !== "image/jpeg" && newWorkImage.type !== "image/png") {
+    // Vérification du format et de la taille de l'image
+    if (inputImage.files[0].type !== "image/jpeg" && inputImage.files[0].type !== "image/png") {
         displayErrorMessage(`Format du fichier incorrect.<br><br>Format requis : <span style = "font-style: italic;">.jpeg</span> ou <span style = "font-style: italic;">.png</span>.`);
-        newWorkImage = null;
+        closeErrorMessage();
+        inputImage.value = "";
+        return;
     }
 
     // Rappel : 4 Mo = 4194304 o
-    if (newWorkImage.size > 4194304) {
+    if (inputImage.files[0].size > 4194304) {
         displayErrorMessage(`Taille du fichier trop importante.<br><br>Taille maximale autorisée : 4 Mo.`);
-        newWorkImage = null;
+        closeErrorMessage();
+        inputImage.value = "";
+        return;
     }
 
     //Aperçu de l'image téléchargée
-    const imageURL = window.URL.createObjectURL(newWorkImage);
+    const imageURL = window.URL.createObjectURL(inputImage.files[0]);
     const imagePreview = document.createElement("img");
         imagePreview.src = imageURL;
         imagePreview.style.margin = "0";
@@ -110,7 +112,7 @@ function findNewImage() {
     //A la fin du chargement de l'image, on supprime l'URL stockée et on affiche l'image dans son conteneur en masquant les autres éléments (label, input etc etc).
     //On les garde actifs au lieu de remttre à zéro l'innerHTML du conteneur pour un autre usage dans la suite du code.
     imagePreview.onload = () => {
-        URL.revokeObjectURL(newWorkImage);
+        URL.revokeObjectURL(inputImage.files[0]);
         const imageContainer = document.querySelector(".addWork_image_container");
         Array.from(imageContainer.children).forEach(child => child.style.display = "none");
         imageContainer.appendChild(imagePreview);
