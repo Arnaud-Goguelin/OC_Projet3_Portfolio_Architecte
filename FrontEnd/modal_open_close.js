@@ -47,6 +47,7 @@ export async function createWorksModal(works) {
     for (const work of works) {
             
         const figureElement = document.createElement("figure");
+        figureElement.dataset.id = work.id;
         modalGallery.appendChild(figureElement);
 
         const imageWork = document.createElement("img");
