@@ -88,21 +88,20 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
 }
 
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
 }
 
 h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
 }
 
 nav {
@@ -203,7 +202,6 @@ nav img:hover {
 
 .gallery img {
 	width: 100%;
-
 }
 
 #contact, #login {
@@ -269,24 +267,14 @@ input[type="submit"]{
 footer {
 	padding: 25px 0 25px 0;
 	width: 100%;
+	background-color: white;
 }
 
 footer nav {
 	display: flex;
 	justify-content: flex-end;
-	margin: auto;
+	margin: 0 100px;
 }
-
-.error_message {
-	border-bottom: solid 2px #930b0b;
-	color : #930b0b;
-	font-size: 16px;
-	font-weight: 700;
-	margin: 30px auto;
-	padding: 15px 30px;
-	text-align: center;
-}
-
 
 
 /* Code session admin*/
@@ -294,7 +282,7 @@ footer nav {
 .header__session_admin {
 	position: absolute;
 	top: -60px;
-	left: -10.5%;
+	left: -150px;
 	width: 100vw;
 	max-width: 1440px;
 	height: 50px;
@@ -369,12 +357,22 @@ footer nav {
 	display:none;
 }
 
+.error_message {
+	border-bottom: solid 2px #930b0b;
+	color : #930b0b;
+	font-size: 16px;
+	font-weight: 700;
+	margin: 30px auto;
+	padding: 15px 30px;
+	text-align: center;
+}
+
 /* Code de la gallerie de la modale */
 
 .modal__background {
 	position:absolute;
 	top: -10px;
-	left: -10.5%;
+	left: -150px;
 	bottom : 0;
 	width: 100vw;
 	max-width: 1440px;
@@ -410,30 +408,21 @@ hr {
 	margin: 0 0 15px 0;
 }
 
-.modal__close_button {
+.modal__window__header button {
 	background-color: transparent;
 	border: none;
 }
 
-.modal__close_button:hover {
+.modal__window__header button:hover {
 	color: #B1663C;
 }
 
-.modal__close_button:active {
+.modal__window__header button:active {
 	color: black;
 }
 
 .modal__previous_button {
-	background-color: transparent;
-	border: none;
-}
-
-.modal__previous_button:hover {
-	color: #B1663C;
-}
-
-.modal__previous_button :active {
-	color: black;
+	visibility: hidden;
 }
 
 .modal__gallery__main {
@@ -488,7 +477,6 @@ hr {
 	border: none;
 	border-radius: 60px;
 	font-family: 'Syne';
-
 }
 
 #modal__gallery__addWork {

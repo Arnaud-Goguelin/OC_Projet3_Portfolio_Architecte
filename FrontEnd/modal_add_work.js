@@ -14,7 +14,7 @@ export function openAddWorkModal() {
 
     //Affichage du bouton "précédent" (flèche vers la gauche)
     const modalPreviousButton = document.querySelector(".modal__previous_button");
-    modalPreviousButton.style.visibility = null;
+    modalPreviousButton.style.visibility = "visible";
     modalPreviousButton.addEventListener("click", closeAddWorkModal);
     
     /* Dans le formulaire, affichage dynamique de la liste de choix des catégories en fonction des catégories enregistrées dans l'API
