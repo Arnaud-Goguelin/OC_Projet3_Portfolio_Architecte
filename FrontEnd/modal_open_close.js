@@ -21,7 +21,7 @@ export function openModal() {
     const modalBackground = document.querySelector(".modal__background");
     modalBackground.addEventListener("click", closeModal);
 
-    // Contraint les deux addEventListener ci-dessus à .modal__container (arrière plan de la modale) ou à .modal__close_button (bouton en croix)
+    // Contraint les deux addEventListener ci-dessus à .modal__background (arrière plan de la modale) ou à .modal__close_button (bouton en croix)
     modalWindow.addEventListener("click", event => event.stopPropagation());
 
     //Ouverture de la deuxième fenêtre de la modale pour l'ajout des works
@@ -31,7 +31,6 @@ export function openModal() {
 
 /* Fonction closeModal = au click, supprime la cible du DOM. Quelle que soit la cible du clic, la fonction s'applique à toute la modale 
 * (intérêt : ne supprime pas seulement l'élément cliqué, comme le bouton de fermeture...).
-* La fonction est contrainte par le stopPropagation ci-dessus (le clic dans la fenêtre , excepté sur le bouton de fermeture, ne déclenchera rien)
 */
 
 function closeModal(target) {
@@ -42,18 +41,17 @@ function closeModal(target) {
 // Affichage des works dans la modale
 export async function createWorksModal(works) {
 
-    const contenerGallery = document.querySelector(".modal__gallery__main");
-    contenerGallery.innerHTML ="";
+    const modalGallery = document.querySelector(".modal__gallery__main");
+    modalGallery.innerHTML ="";
 
     for (const work of works) {
             
         const figureElement = document.createElement("figure");
-        figureElement.dataset.id = `${work.id}`;
-        contenerGallery.appendChild(figureElement);
+        modalGallery.appendChild(figureElement);
 
         const imageWork = document.createElement("img");
         imageWork.src = work.imageUrl;
-        imageWork.classList.add("imageWork");
+        imageWork.classList.add("modal__gallery__imageWork");
         figureElement.appendChild(imageWork);
 
         const modalPublishButton = document.createElement("button");

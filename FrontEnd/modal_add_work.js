@@ -21,7 +21,7 @@ export function openAddWorkModal() {
     /* Dans le formulaire, affichage dynamique de la liste de choix des catégories en fonction des catégories enregistrées dans l'API
     * Pour la première valeur de categories ("Tous"), on n'affiche pas de texte pour la balise <option> et sa valeur est égale à null (pour permettre la modification du bouton valider)
     */ 
-    const formCategory = document.querySelector("#newWorkCategory");
+    const formCategory = document.querySelector("#modal__addWork_newWorkCategory");
     for (let category of categories) {
         const option = document.createElement("option");
             option.value = category.id === 0 ? "" : category.id;
@@ -32,9 +32,8 @@ export function openAddWorkModal() {
     }
 
     //Ajout d'une possibilité de créer une nouvelle catégorie
-    const newCategory = document.createElement("option");
-    newCategory.innerText = "Créer une nouvelle catégorie";
-    formCategory.appendChild(newCategory);
+    const NewCategory = new Option ("Créer une nouvelle catégorie");
+    formCategory.add(NewCategory, null);
     
     formCategory.addEventListener("change", createNewCategory);
     
@@ -52,8 +51,7 @@ export function openAddWorkModal() {
 
 //Fonction pour revenir à la première modale "Gallerie Photo" (efface l'intégralité de la modale et l'affiche à nouveau)
 function closeAddWorkModal() {
-    const modalBackground = document.querySelector(".modal__background");
-    modalBackground.remove();
+    document.querySelector(".modal__background").remove();
     openModal();
 }
 
@@ -63,19 +61,19 @@ function closeAddWorkModal() {
 */
 
 function createNewCategory() {
-    const modalFormNewWork = document.querySelector(".addWork_text_container");
-    const formCategory = document.querySelector("#newWorkCategory");
+    const modalTextNewWork = document.querySelector(".modal__addWork__text_container");
+    const newWorkCategory = document.querySelector("#modal__addWork_newWorkCategory");
     /* Si l'index de l'élément de la liste choisi est égale à l'index du dernier élément (dernière option ajoutée "Créer une nouvelle catégorie"), 
     * alors afficher un champ de saisi pour saisir le nom de la nouvelle catégorie.
     */
-    if (formCategory.selectedIndex === formCategory.length -1) {
+    if (newWorkCategory.selectedIndex === newWorkCategory.length -1) {
         const newCategoryInput = document.createElement("input");
             newCategoryInput.dataset.type = "text";
             newCategoryInput.dataset.name = "newCategoryInput";
             newCategoryInput.dataset.id = "newCategoryInput";
 
-            formCategory.style.display = "none";
-            modalFormNewWork.appendChild(newCategoryInput);
+            newWorkCategory.style.display = "none";
+            modalTextNewWork.appendChild(newCategoryInput);
             newCategoryInput.focus();
     };
 }
@@ -102,9 +100,8 @@ function findNewImage() {
     }
 
     //Aperçu de l'image téléchargée
-    const imageURL = window.URL.createObjectURL(inputImage.files[0]);
     const imagePreview = document.createElement("img");
-        imagePreview.src = imageURL;
+        imagePreview.src = window.URL.createObjectURL(inputImage.files[0]);
         imagePreview.style.margin = "0";
         imagePreview.style.width = "35%";
         imagePreview.dataset.id = "newWorkPreview";
@@ -113,7 +110,7 @@ function findNewImage() {
     //On les garde actifs au lieu de remttre à zéro l'innerHTML du conteneur pour un autre usage dans la suite du code.
     imagePreview.onload = () => {
         URL.revokeObjectURL(inputImage.files[0]);
-        const imageContainer = document.querySelector(".addWork_image_container");
+        const imageContainer = document.querySelector(".modal__addWork__image_container");
         Array.from(imageContainer.children).forEach(child => child.style.display = "none");
         imageContainer.appendChild(imagePreview);
         imageContainer.style.padding = "0";
@@ -123,7 +120,7 @@ function findNewImage() {
 function checkEntries() {
 
     const inputImage = document.querySelector("#modal__addWork_addPhotoInput");
-    const newWorkTitle = document.querySelector("#newWorkTitle");
+    const newWorkTitle = document.querySelector("#modal__addWork_newWorkTitle");
     const newWorkCategory = document.querySelector("#newWorkCategory");
 
     if (inputImage.files.length != 0 && newWorkTitle.value && newWorkCategory.value) {
@@ -174,8 +171,8 @@ async function sendNewWork() {
 function lastCheck() {
 
     const inputImage = document.querySelector("#modal__addWork_addPhotoInput");
-    const newWorkTitle = document.querySelector("#newWorkTitle");
-    const newWorkCategory = document.querySelector("#newWorkCategory");
+    const newWorkTitle = document.querySelector("#modal__addWork_newWorkTitle");
+    const newWorkCategory = document.querySelector("#modal__addWork_newWorkCategory");
 
     inputImage.files.length === 0 ? displayErrorMessage(`Aucun fichier sélectionné.<br><br>Une image est requise pour ajouter un projet.`) : null;
 
@@ -210,7 +207,7 @@ function closeErrorMessage() {
     if (errorMessage) {
      //Création d'un bouton de fermeture du message d'erreur
         const popUp = document.querySelector(".modal__addWork__main");
-        const marker = document.querySelector(".marker");
+        const marker = document.querySelector(".modal__addWork_marker");
         const closeErrorMessage = document.createElement("button");
         closeErrorMessage.textContent="Fermer";
 

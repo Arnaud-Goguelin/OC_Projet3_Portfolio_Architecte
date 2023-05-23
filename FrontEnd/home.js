@@ -1,7 +1,6 @@
 /* TO DO:
 
 * architecture de test à mettre en place?
-* révision de la nommanclature
 * respect de l'accessibilité du site à mettre en place?
 
 */

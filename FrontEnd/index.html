@@ -113,7 +113,7 @@
 
 				<div class = "modal__window">
 
-					<div class = "modal__header">
+					<div class = "modal__window__header">
 						<button class = "modal__previous_button" style = "visibility: hidden;"><i class="fa-solid fa-arrow-left"></i></button>
 						<button class = "modal__close_button"><i class = "fa-solid fa-xmark"></i></button>
 					</div>
@@ -144,7 +144,7 @@
 
 						<div class ="modal__addWork__container">
 
-							<div class = "modal__addWork__header">
+							<div class = "modal__addWork__title">
 								<h3>Ajout Photo</h3>
 							</div>
 
@@ -152,28 +152,28 @@
 
 								<form enctype="multipart/form-data" action = "http://localhost:5678/api/works" method="post" name = "form__newWork" id="form__newWork" >
 
-									<div class = "addWork_image_container">
+									<div class = "modal__addWork__image_container">
 										<img src ="assets/icons/image.png" alt = "dessin d'image">
 										<label for ="modal__addWork_addPhotoInput" id = "modal__addWork_addPhotoLabel">+ Ajouter photo</label>
 										<input type = "file" name = "image" id = "modal__addWork_addPhotoInput" accept=".jpg, .png" style = "opacity: 0;" required="required">
 										<p>jpg, png : 4mo max</p>
 									</div>
 
-									<div class = "addWork_text_container">
-										<label for = "newWorkTitle">Titre</label>
-										<input type = "text" name="title" id="newWorkTitle" required="required">
-										<label for = "newWorkCategory">Catégorie</label>
-										<select name = "category" id = "newWorkCategory" required="required"></select>
+									<div class = "modal__addWork__text_container">
+										<label for = "modal__addWork_newWorkTitle">Titre</label>
+										<input type = "text" name="title" id="modal__addWork_newWorkTitle" required="required">
+										<label for = "modal__addWork_newWorkCategory">Catégorie</label>
+										<select name = "category" id = "modal__addWork_newWorkCategory" required="required"></select>
 									</div>
 
 								</form>
 
 							</div>
 
-							<hr class = "marker">
+							<hr class = "modal__addWork_marker">
 
 							<div class = "modal__addWork__footer">
-								<input type = "submit" id ="modal__addWork__validate" class = "modal__addWork__validate inactive" value = "Valider">
+								<input type = "submit" id ="modal__addWork__validate" class = "modal__addWork__validate" value = "Valider">
 							</div>
 
 						</div>

@@ -404,7 +404,7 @@ hr {
 	margin: 50px auto 40px auto;
 }
 
-.modal__header {
+.modal__window__header {
 	display: flex;
 	justify-content: space-between;
 	margin: 0 0 15px 0;
@@ -446,7 +446,7 @@ hr {
 	margin : 0 4px 10px 4px;
 }
 
-.imageWork {
+.modal__gallery__imageWork {
 	width: 100%;
 }
 
@@ -529,7 +529,7 @@ hr {
 	width: 80%;
 }
 
-.addWork_image_container {
+.modal__addWork__image_container {
 	background-color: #E8F1F6;
 	display: flex;
 	flex-direction: column;
@@ -540,7 +540,7 @@ hr {
 	margin: 0 0 30px 0;
 }
 
-.addWork_image_container img {
+.modal__addWork__image_container img {
 	width: 15%;
 	margin: 0 0 20px 0;
 }
@@ -556,24 +556,20 @@ hr {
 	font-weight: 500;
 }
 
-.addWork_text_container {
+.modal__addWork__text_container {
 	display: flex;
 	flex-direction: column;
 	margin: 0 0 30px 0;
+	font-family: 'Work Sans';
 }
 
-.addWork_text_container label {
-	font-family: 'Work Sans';
+.modal__addWork__text_container label {
 	font-size: 14px;
 	font-weight: 500;
 	margin: 0 0 10px 0;
 }
 
-.addWork_text_container {
-	font-family: 'Work Sans';
-}
-
-.addWork_text_container input, .addWork_text_container select {
+.modal__addWork__text_container input, .modal__addWork__text_container select {
 	border: none;
 	background: #FFFFFF;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
