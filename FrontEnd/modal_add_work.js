@@ -156,10 +156,12 @@ function lastCheck() {
     };
 }
 
+// Affichage des messages d'erreur
 function displayErrorMessage(ErrorMessage) {
 
-    /*On masque les éléments de la fenêtre de la modal pour afficher le message d'erreur.
-    *On ne les supprime pas pour garder les valeurs saisies ou fichier chargé dans le cas où certain(e)s seraient valides.
+    /* On masque les éléments de la fenêtre de la modal pour afficher le message d'erreur.
+    * On ne les supprime pas pour garder les valeurs saisies ou fichier chargé dans le cas où certain(e)s seraient valides.
+    * Le contenu du message est à saisir manuellement dans le paramètre de la fonction.
     */
     const popUp = document.querySelector(".modal__addWork__main");
     popUp.children[0].style.display = "none";
@@ -167,8 +169,9 @@ function displayErrorMessage(ErrorMessage) {
     errorMessage.innerHTML = ErrorMessage;
     errorMessage.classList.add("error_message");
     popUp.appendChild(errorMessage);
-};
+}
 
+// Fermeture des messages d'erreur
 function closeErrorMessage() {
 
     //Création d'un bouton de fermeture du message d'erreur
