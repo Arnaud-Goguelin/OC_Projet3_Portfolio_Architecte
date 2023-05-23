@@ -411,6 +411,7 @@ hr {
 .modal__window__header button {
 	background-color: transparent;
 	border: none;
+	font-size: 20px;
 }
 
 .modal__window__header button:hover {
