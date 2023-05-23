@@ -1,8 +1,6 @@
 import { works, categories, token, createWorks } from "./home.js"
 import { openModal } from "./modal_open_close.js"
 
-//La variable everythingIsOk permet de délcencher l'envoi du nouveau work à l'API
-let everythingIsOk = null;
 
 export function openAddWorkModal() {
     // Effacement de l'intégralité du contenu de la fenêtre de la modale après le modal__header
@@ -47,7 +45,7 @@ export function openAddWorkModal() {
     requiredElements.forEach(requiredElement => requiredElement.addEventListener("change", checkEntries));
 
     const validateButton = document.querySelector("#modal__addWork__validate");
-    validateButton.addEventListener("click", sendNewWork);
+    validateButton.addEventListener("click", lastCheck);
 }
 
 //Fonction pour revenir à la première modale "Gallerie Photo" (efface l'intégralité de la modale et l'affiche à nouveau)
@@ -122,7 +120,7 @@ function checkEntries() {
     //Récupération des 3 balises input et selec du formulaire
     const inputImage = document.querySelector("#modal__addWork_addPhotoInput");
     const newWorkTitle = document.querySelector("#modal__addWork_newWorkTitle");
-    const newWorkCategory = document.querySelector("#newWorkCategory");
+    const newWorkCategory = document.querySelector("#modal__addWork_newWorkCategory");
 
     //Vérification de leurs valeurs, si elles sont existantes, on dégrise le bouton valider
     if (inputImage.files.length != 0 && newWorkTitle.value && newWorkCategory.value) {
@@ -132,46 +130,6 @@ function checkEntries() {
     };
 }
 
-// Envoie des nouvelles données à l'API
-
-async function sendNewWork() {
-
-    //Affichage des messages d'erreurs si des données sont maquantes
-    lastCheck();
-   
-    /*Si toutes les données du formulaires sont saisies et valides, on a incrémenté la variable everythingIsOk.
-    * Si elle est existante, on déclanche le poste sur l'API du nouveau work et on réinitialise everythingIsOk.
-    */
-    if (everythingIsOk) {
-        //Création du body de la requête fetch sour la forme d'un objet FormData
-        const newWorkForm = document.querySelector("#form__newWork");
-        const newWorkBody = new FormData(newWorkForm);
-    
-        //Envoie du nouveau work
-        const answerAPIPostNewWork = await fetch ("http://localhost:5678/api/works", {
-            method: "POST",
-            headers: {
-                "Authorization" : `Bearer ${token}`,
-            },
-            body: newWorkBody,
-        });
-        
-        everythingIsOk = null;
-    
-        //Si la réponse est ok, insertion du nouveau work dans le tableau et MAJ de l'affichage
-        if (answerAPIPostNewWork.ok) {
-            /*A ce stade la réponse est à parser en objet JS au format JSON. Elle deviendra alors une promesse.
-            *Il faut attendre qu'elle soit résolue avant de l'utiliser comme objet à ajouter à notre tableau "works",
-            * d'où l'utilisation de la méthode .then.
-            */
-            answerAPIPostNewWork.json().then(newWork  => {
-            works.push(newWork);
-            createWorks(works);
-            closeAddWorkModal();
-            });
-        };
-    };
-}  
 
 //Affichage de messages d'erreurs en cas de données manquantes
 function lastCheck() {
@@ -193,13 +151,10 @@ function lastCheck() {
     if (errorMessage) {
     closeErrorMessage();
     }else{
-    /* Si aucun message n'est affiché, c'est que nous avons toutes les données valides pour poster le nouveau work,
-    * on incrémente donc la vairable everythingIsOk pour cela.
-    */
-    return everythingIsOk ++;
+    //Si aucun message n'est affiché, c'est que nous avons toutes les données valides pour poster le nouveau work, on déclenche alors l'envoie à l'API.
+    sendNewWork();
     };
 }
-
 
 function displayErrorMessage(ErrorMessage) {
 
@@ -232,4 +187,34 @@ function closeErrorMessage() {
         closeErrorMessage.remove();
         popUp.children[0].style.display = null;
     });
+};
+
+// Envoie des nouvelles données à l'API
+async function sendNewWork() {
+
+    //Création du body de la requête fetch sour la forme d'un objet FormData
+    const newWorkForm = document.querySelector("#form__newWork");
+    const newWorkBody = new FormData(newWorkForm);
+
+    //Envoie du nouveau work
+    const answerAPIPostNewWork = await fetch ("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+            "Authorization" : `Bearer ${token}`,
+        },
+        body: newWorkBody,
+    });
+    
+    //Si la réponse est ok, insertion du nouveau work dans le tableau et MAJ de l'affichage
+    if (answerAPIPostNewWork.ok) {
+        /*A ce stade la réponse est à parser en objet JS au format JSON. Elle deviendra alors une promesse.
+        *Il faut attendre qu'elle soit résolue avant de l'utiliser comme objet à ajouter à notre tableau "works",
+        * d'où l'utilisation de la méthode .then.
+        */
+        answerAPIPostNewWork.json().then(newWork  => {
+        works.push(newWork);
+        createWorks(works);
+        closeAddWorkModal();
+        });
+    };
 };
