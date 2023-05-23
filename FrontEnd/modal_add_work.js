@@ -1,6 +1,7 @@
 import { works, categories, token, createWorks } from "./home.js"
 import { openModal } from "./modal_open_close.js"
 
+//La variable everythingIsOk permet de délcencher l'envoi du nouveau work à l'API
 let everythingIsOk = null;
 
 export function openAddWorkModal() {
@@ -118,11 +119,12 @@ function findNewImage() {
 }
 
 function checkEntries() {
-
+    //Récupération des 3 balises input et selec du formulaire
     const inputImage = document.querySelector("#modal__addWork_addPhotoInput");
     const newWorkTitle = document.querySelector("#modal__addWork_newWorkTitle");
     const newWorkCategory = document.querySelector("#newWorkCategory");
 
+    //Vérification de leurs valeurs, si elles sont existantes, on dégrise le bouton valider
     if (inputImage.files.length != 0 && newWorkTitle.value && newWorkCategory.value) {
           document.querySelector("#modal__addWork__validate").style.background = "#1D6154";
     }else{
@@ -134,8 +136,12 @@ function checkEntries() {
 
 async function sendNewWork() {
 
+    //Affichage des messages d'erreurs si des données sont maquantes
     lastCheck();
    
+    /*Si toutes les données du formulaires sont saisies et valides, on a incrémenté la variable everythingIsOk.
+    * Si elle est existante, on déclanche le poste sur l'API du nouveau work et on réinitialise everythingIsOk.
+    */
     if (everythingIsOk) {
         //Création du body de la requête fetch sour la forme d'un objet FormData
         const newWorkForm = document.querySelector("#form__newWork");
@@ -170,21 +176,26 @@ async function sendNewWork() {
 //Affichage de messages d'erreurs en cas de données manquantes
 function lastCheck() {
 
+    //Récupération des 3 balises input et selec du formulaire
     const inputImage = document.querySelector("#modal__addWork_addPhotoInput");
     const newWorkTitle = document.querySelector("#modal__addWork_newWorkTitle");
     const newWorkCategory = document.querySelector("#modal__addWork_newWorkCategory");
 
+    //Si leurs valeurs sont inexistantes, on affiche un message d'erreur
     inputImage.files.length === 0 ? displayErrorMessage(`Aucun fichier sélectionné.<br><br>Une image est requise pour ajouter un projet.`) : null;
 
     newWorkTitle.value === "" ? displayErrorMessage(`Aucun titre saisi.<br><br>Un titre est requis pour ajouter un projet.`) : null;
 
     newWorkCategory.value === "" ? displayErrorMessage(`Aucune catégorie sélectionnée.<br><br>Une catégorie est requise pour ajouter un projet.`) : null;
 
+    // Si des messages d'erreurs sont affichés, on affiche le bouton de fermeture de ces messages
     const errorMessage = document.querySelector(".error_message");
-
     if (errorMessage) {
     closeErrorMessage();
     }else{
+    /* Si aucun message n'est affiché, c'est que nous avons toutes les données valides pour poster le nouveau work,
+    * on incrémente donc la vairable everythingIsOk pour cela.
+    */
     return everythingIsOk ++;
     };
 }
@@ -192,7 +203,9 @@ function lastCheck() {
 
 function displayErrorMessage(ErrorMessage) {
 
-    //On masque les éléments de la fenêtre de la modal pour afficher le message d'erreur
+    /*On masque les éléments de la fenêtre de la modal pour afficher le message d'erreur.
+    *On ne les supprime pas pour garder les valeurs saisies ou fichier chargé dans le cas où certain(e)s seraient valides.
+    */
     const popUp = document.querySelector(".modal__addWork__main");
     popUp.children[0].style.display = "none";
     const errorMessage = document.createElement("p");
@@ -203,21 +216,20 @@ function displayErrorMessage(ErrorMessage) {
 
 function closeErrorMessage() {
 
-    const errorMessage = document.querySelector(".error_message");
-    if (errorMessage) {
-     //Création d'un bouton de fermeture du message d'erreur
-        const popUp = document.querySelector(".modal__addWork__main");
-        const marker = document.querySelector(".modal__addWork_marker");
-        const closeErrorMessage = document.createElement("button");
-        closeErrorMessage.textContent="Fermer";
+    //Création d'un bouton de fermeture du message d'erreur
+    const popUp = document.querySelector(".modal__addWork__main");
+    const marker = document.querySelector(".modal__addWork_marker");
+    const closeErrorMessage = document.createElement("button");
+    closeErrorMessage.textContent="Fermer";
 
-        popUp.parentElement.insertBefore(closeErrorMessage, marker);
+    //On l'affiche avant la balise hr (assure une place après l'ensemble des messages d'erreur s'il y en a plusieurs)
+    popUp.parentElement.insertBefore(closeErrorMessage, marker);
     
-        const errorMessages = document.querySelectorAll(".error_message")
+    //Au clic, le bouton surpprime du DOM chaque message d'erreur existant + le bouton lui-même et réaffiche les éléments de la modal du formulaire.
+    const errorMessages = document.querySelectorAll(".error_message")
         closeErrorMessage.addEventListener("click", () => {
-            errorMessages.forEach (errorMessage => errorMessage.remove());
-            closeErrorMessage.remove();
-            popUp.children[0].style.display = null;
-        });
-    };
-}
+        errorMessages.forEach (errorMessage => errorMessage.remove());
+        closeErrorMessage.remove();
+        popUp.children[0].style.display = null;
+    });
+};
