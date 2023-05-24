@@ -520,13 +520,17 @@ hr {
 
 .modal__addWork__image_container {
 	background-color: #E8F1F6;
+	height: 200px;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
 	align-items: center;
-	justify-content: center;
-	padding: 30px 0 20px 0;
+	justify-content: start;
+	padding: 30px 0 0 0;
 	margin: 0 0 30px 0;
+}
+
+.modal__addWork__image_container p {
+	margin: 0 0 10px 0;
 }
 
 .modal__addWork__image_container img {
@@ -534,10 +538,15 @@ hr {
 	margin: 0 0 20px 0;
 }
 
+#modal__addWork_addPhotoInput {
+	display: none;
+}
+
 #modal__addWork_addPhotoLabel {
 	border: none;
 	background-color: #CBD6DC;
 	padding: 10px 30px;
+	margin : 0 0 10px 0;
 	border-radius: 50px;
 	font-family: 'Work sans';
 	color: #306685;
@@ -548,7 +557,8 @@ hr {
 .modal__addWork__text_container {
 	display: flex;
 	flex-direction: column;
-	margin: 0 0 30px 0;
+	justify-content: space-between;
+	height: 200px;
 	font-family: 'Work Sans';
 }
 
@@ -556,6 +566,7 @@ hr {
 	font-size: 14px;
 	font-weight: 500;
 	margin: 0 0 10px 0;
+	display: flex;
 }
 
 .modal__addWork__text_container input, .modal__addWork__text_container select {
@@ -574,9 +585,12 @@ hr {
 	width: 100%;
 }
 
-#modal__addWork__validate {
-	/* background-color: #A7A7A7; */
+.modal__addwork__display_errorMessage {
 	width: 40%;
+}
+
+#modal__addWork__validate {
+	width: 100%;
 	padding: 10px 45px 10px 45px;
 	border: none;
 	border-radius: 60px;
@@ -586,10 +600,18 @@ hr {
 	color: white;
 }
 
-#modal__addWork__validate :disabled {
+#modal__addWork__validate:disabled {
 	background-color:#A7A7A7;
 }
 
-#modal__addWork__validate :enabled {
+#modal__addWork__validate:enabled {
 	background-color:#1D6154;
+}
+
+.error_message_specific {
+	color : #930b0b;
+	font-size: 14px;
+	font-weight: 500;
+	text-align: center;
+	margin: 0 15px;
 }

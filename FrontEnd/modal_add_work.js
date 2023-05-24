@@ -1,8 +1,15 @@
 import { works, categories, token, createWorks } from "./home.js"
 import { openModal } from "./modal_open_close.js"
 
+//Ces 3 variables serviront de conditions pour s'assurer que le formulaire est rempli
+let newWorkImageOk = false;
+let newWorkTitleOk = false;
+let newWorkCategoryOk = false;
+let errorMessage;
 
+//Ouverture de la deuxième modale d'ajout des works
 export function openAddWorkModal() {
+
     // Effacement de l'intégralité du contenu de la fenêtre de la modale après le modal__header
     const modalGallery = document.querySelector(".modal__gallery__container");
     modalGallery.remove();
@@ -18,7 +25,7 @@ export function openAddWorkModal() {
     modalPreviousButton.addEventListener("click", closeAddWorkModal);
     
     /* Dans le formulaire, affichage dynamique de la liste de choix des catégories en fonction des catégories enregistrées dans l'API
-    * Pour la première valeur de categories ("Tous"), on n'affiche pas de texte pour la balise <option> et sa valeur est égale à null (pour permettre la modification du bouton valider)
+    * Pour la première valeur de categories ("Tous"), on n'affiche pas de texte pour la balise <option>.
     */ 
     const formCategory = document.querySelector("#modal__addWork_newWorkCategory");
     for (let category of categories) {
@@ -35,26 +42,50 @@ export function openAddWorkModal() {
     formCategory.add(NewCategory, null);
     
     formCategory.addEventListener("change", createNewCategory);
-    
+
+   
     //Vérification et traitement du document chargé pour l'ajout de la photo
     const addPhotoButton = document.querySelector("#modal__addWork_addPhotoInput");
+    // addPhotoButton.addEventListener("input", findNewImage);
     addPhotoButton.addEventListener("change", findNewImage);
 
-    // Activation du bouton "valider" une fois que tous les champs sont remplis
-    const requiredElements = document.querySelectorAll(":required");
-    requiredElements.forEach(requiredElement => requiredElement.addEventListener("change", checkEntries));
+    //Si un titre est saisi on déclenche checkEntries et on passe newWorkTitleOk à true et on teste l'activation du bouton "valider"
+    const newWorkTitle = document.querySelector("#modal__addWork_newWorkTitle");
+    newWorkTitle.addEventListener("change", (event) => {
+        if (event.target.value != "") {
+            newWorkTitleOk = true;
+            checkEntries();
+        }
+    });
 
-    const validateButton = document.querySelector("#modal__addWork__validate");
-    validateButton.addEventListener("click", lastCheck);
+    //Si une catégorie est sélectionnée on déclenche checkEntries et on passe newWorkCategoryOk à true et on teste l'activation du bouton "valider"
+    formCategory.addEventListener("change", (event) => {
+        if (event.target.value != "") {
+            newWorkCategoryOk = true;
+            checkEntries();
+        }
+    });
+
+    const validateButton = document.querySelector("#modal__addWork__validate")
+    validateButton.addEventListener("click", sendNewWork);
+
+    //Gestion de l'affichage des messages d'erreur
+    const displayErrorMessageZone = document.querySelector(".modal__addwork__display_errorMessage")
+    displayErrorMessageZone.addEventListener("mouseover", displayErrorMessage);
+    displayErrorMessageZone.addEventListener("mouseout", hideErrorMessage);
 }
 
-//Fonction pour revenir à la première modale "Gallerie Photo" (efface l'intégralité de la modale et l'affiche à nouveau)
+//Fermeture de la modale d'ajout d'un work et retour à la première modale "Gallerie Photo" 
+//(efface l'intégralité de la modale et l'affiche à nouveau avec réinitialisation des variables de vérifications des données des formulaires)
 function closeAddWorkModal() {
+    newWorkImageOk = false;
+    newWorkTitleOk = false;
+    newWorkCategoryOk = false;
     document.querySelector(".modal__background").remove();
     openModal();
 }
 
-/* Fonction createNewCategory permet la saisie d'une nouvelle catégorie dans la liste déroulante de choix.
+/* Saisie d'une nouvelle catégorie dans la liste déroulante de choix.
 * Elle ne sera pas plus développée car cela ne fait pas partie du cahier des charges 
 * (pas d'enregistrement de la valeur saisie et donc pas de prise en compte pour l'activation du bouton valider).
 */
@@ -77,33 +108,40 @@ function createNewCategory() {
     };
 }
 
-//Traitement du fichier téléchargé dans la balise input pour l'ajout d'une nouvelle photo pour un nouveau work
+//Vérification et traitement du fichier téléchargé dans la balise input pour l'ajout d'une nouvelle photo pour un nouveau work
 function findNewImage() {
-    //Récupération du fichier téléchargé
+
     const inputImage = document.querySelector("#modal__addWork_addPhotoInput");
 
     // Vérification du format et de la taille de l'image
     if (inputImage.files[0].type !== "image/jpeg" && inputImage.files[0].type !== "image/png") {
         displayErrorMessage(`Format du fichier incorrect.<br><br>Format requis : <span style = "font-style: italic;">.jpeg</span> ou <span style = "font-style: italic;">.png</span>.`);
-        closeErrorMessage();
         inputImage.value = "";
+        newWorkImageOk = false;
         return;
     }
 
     // Rappel : 4 Mo = 4194304 o
     if (inputImage.files[0].size > 4194304) {
         displayErrorMessage(`Taille du fichier trop importante.<br><br>Taille maximale autorisée : 4 Mo.`);
-        closeErrorMessage();
         inputImage.value = "";
+        newWorkImageOk = false;
         return;
     }
 
+    // On passe newWorkImageOk à true lorsque les 3 vérifications ci dessus sont passées (et que la fonction n'est pas arrêtée par un "return").
+    // Puis on teste l'activation du bouton "valider"
+    newWorkImageOk = true;
+    checkEntries();
     //Aperçu de l'image téléchargée
     const imagePreview = document.createElement("img");
         imagePreview.src = window.URL.createObjectURL(inputImage.files[0]);
         imagePreview.style.margin = "0";
         imagePreview.style.width = "35%";
         imagePreview.dataset.id = "newWorkPreview";
+
+    const imageContainer = document.querySelector(".modal__addWork__image_container");
+        imageContainer.style.height = "auto"
 
     //A la fin du chargement de l'image, on supprime l'URL stockée et on affiche l'image dans son conteneur en masquant les autres éléments (label, input etc etc).
     //On les garde actifs au lieu de remttre à zéro l'innerHTML du conteneur pour un autre usage dans la suite du code.
@@ -116,81 +154,55 @@ function findNewImage() {
     };
 }
 
+//Vérification de la présence des données du formulaire pour activer le bouton de validation
 function checkEntries() {
-    //Récupération des 3 balises input et selec du formulaire
-    const inputImage = document.querySelector("#modal__addWork_addPhotoInput");
-    const newWorkTitle = document.querySelector("#modal__addWork_newWorkTitle");
-    const newWorkCategory = document.querySelector("#modal__addWork_newWorkCategory");
+  
+    const validateButton = document.querySelector("#modal__addWork__validate");
 
-    //Vérification de leurs valeurs, si elles sont existantes, on dégrise le bouton valider
-    if (inputImage.files.length != 0 && newWorkTitle.value && newWorkCategory.value) {
-          document.querySelector("#modal__addWork__validate").style.background = "#1D6154";
+    //Vérification des 3 variables 
+    if (newWorkImageOk === true && newWorkTitleOk === true && newWorkCategoryOk === true) {
+          validateButton.disabled = false;
     }else{
-        document.querySelector("#modal__addWork__validate").style.background = "#A7A7A7";
-    };
-}
-
-
-//Affichage de messages d'erreurs en cas de données manquantes
-function lastCheck() {
-
-    //Récupération des 3 balises input et selec du formulaire
-    const inputImage = document.querySelector("#modal__addWork_addPhotoInput");
-    const newWorkTitle = document.querySelector("#modal__addWork_newWorkTitle");
-    const newWorkCategory = document.querySelector("#modal__addWork_newWorkCategory");
-
-    //Si leurs valeurs sont inexistantes, on affiche un message d'erreur
-    inputImage.files.length === 0 ? displayErrorMessage(`Aucun fichier sélectionné.<br><br>Une image est requise pour ajouter un projet.`) : null;
-
-    newWorkTitle.value === "" ? displayErrorMessage(`Aucun titre saisi.<br><br>Un titre est requis pour ajouter un projet.`) : null;
-
-    newWorkCategory.value === "" ? displayErrorMessage(`Aucune catégorie sélectionnée.<br><br>Une catégorie est requise pour ajouter un projet.`) : null;
-
-    // Si des messages d'erreurs sont affichés, on affiche le bouton de fermeture de ces messages
-    const errorMessage = document.querySelector(".error_message");
-    if (errorMessage) {
-    closeErrorMessage();
-    }else{
-    //Si aucun message n'est affiché, c'est que nous avons toutes les données valides pour poster le nouveau work, on déclenche alors l'envoie à l'API.
-    sendNewWork();
+        validateButton.disabled = true;
     };
 }
 
 // Affichage des messages d'erreur
-function displayErrorMessage(ErrorMessage) {
+function displayErrorMessage() {
 
-    /* On masque les éléments de la fenêtre de la modal pour afficher le message d'erreur.
-    * On ne les supprime pas pour garder les valeurs saisies ou fichier chargé dans le cas où certain(e)s seraient valides.
-    * Le contenu du message est à saisir manuellement dans le paramètre de la fonction.
-    */
-    const popUp = document.querySelector(".modal__addWork__main");
-    popUp.children[0].style.display = "none";
-    const errorMessage = document.createElement("p");
-    errorMessage.innerHTML = ErrorMessage;
-    errorMessage.classList.add("error_message");
-    popUp.appendChild(errorMessage);
+    if (newWorkImageOk === false) {
+        const ErrorMessageZone = document.querySelector(".modal__addWork__image_container");
+        createErrorMessage("Une image est requise pour ajouter une photo.");
+        ErrorMessageZone.appendChild(errorMessage);
+    };
+
+    if (newWorkTitleOk === false) {
+        const ErrorMessageZone = document.querySelector(".modal__addwork__errorMessageTitle");
+        createErrorMessage("Un titre est requis pour ajouter une photo.");
+        ErrorMessageZone.appendChild(errorMessage);
+    };
+
+    if (newWorkCategoryOk === false) {
+        const ErrorMessageZone = document.querySelector(".modal__addwork__errorMessageCategory");
+        createErrorMessage("Une catégorie est requise pour ajouter une photo.");
+        ErrorMessageZone.appendChild(errorMessage);
+    };
 }
 
-// Fermeture des messages d'erreur
-function closeErrorMessage() {
-
-    //Création d'un bouton de fermeture du message d'erreur
-    const popUp = document.querySelector(".modal__addWork__main");
-    const marker = document.querySelector(".modal__addWork_marker");
-    const closeErrorMessage = document.createElement("button");
-    closeErrorMessage.textContent="Fermer";
-
-    //On l'affiche avant la balise hr (assure une place après l'ensemble des messages d'erreur s'il y en a plusieurs)
-    popUp.parentElement.insertBefore(closeErrorMessage, marker);
+// Création des messages d'erreur
+function createErrorMessage( errorMessageText) {
     
-    //Au clic, le bouton surpprime du DOM chaque message d'erreur existant + le bouton lui-même et réaffiche les éléments de la modal du formulaire.
-    const errorMessages = document.querySelectorAll(".error_message")
-        closeErrorMessage.addEventListener("click", () => {
-        errorMessages.forEach (errorMessage => errorMessage.remove());
-        closeErrorMessage.remove();
-        popUp.children[0].style.display = null;
-    });
-};
+    errorMessage = document.createElement("p");
+    errorMessage.innerText = errorMessageText;
+    errorMessage.classList.add("error_message_specific");
+    return errorMessage;
+}
+
+// Suppression des messages d'erreur
+function hideErrorMessage() {
+    const errorMessages = document.querySelectorAll(".error_message_specific");
+    errorMessages ? errorMessages.forEach(errorMessage => errorMessage.remove()) : null;
+}
 
 // Envoie des nouvelles données à l'API
 async function sendNewWork() {

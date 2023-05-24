@@ -107,6 +107,8 @@
 
 		</section>
 
+		<!-- L'utilisation des balises template permet de ne pas surchager le DOM. le code compris dans ces balises n'est exécuté qu'à la demande dans le code JS.
+		Ainsi toutes les variables sont remises à leurs valeurs intiales à chaque fermeture de la modale (ou changement de fenêtre), idem pour les eventlisteners. -->
 		<template id = "modal">
 
 			<div class = "modal__background">
@@ -153,17 +155,23 @@
 								<form enctype="multipart/form-data" action = "http://localhost:5678/api/works" method="post" name = "form__newWork" id="form__newWork" >
 
 									<div class = "modal__addWork__image_container">
+
 										<img src ="assets/icons/image.png" alt = "dessin d'image">
 										<label for ="modal__addWork_addPhotoInput" id = "modal__addWork_addPhotoLabel">+ Ajouter photo</label>
-										<input type = "file" name = "image" id = "modal__addWork_addPhotoInput" accept=".jpg, .png" style = "opacity: 0;" required="required">
+										<input type = "file" name = "image" id = "modal__addWork_addPhotoInput" accept= ".png, .jpg, .jpeg" required="required">
 										<p>jpg, png : 4mo max</p>
+										
 									</div>
 
 									<div class = "modal__addWork__text_container">
-										<label for = "modal__addWork_newWorkTitle">Titre</label>
+
+										<!-- Ajout d'une span dans le label pour permettre l'affichage d'un message d'erreur au besoin. -->
+										<label for = "modal__addWork_newWorkTitle">Titre<span class="modal__addwork__errorMessageTitle"></span></label>
 										<input type = "text" name="title" id="modal__addWork_newWorkTitle" required="required">
-										<label for = "modal__addWork_newWorkCategory">Catégorie</label>
+										<!-- Ajout d'une span dans le label pour permettre l'affichage d'un message d'erreur au besoin. -->
+										<label for = "modal__addWork_newWorkCategory">Catégorie<span class="modal__addwork__errorMessageCategory"></span></label>
 										<select name = "category" id = "modal__addWork_newWorkCategory" required="required"></select>
+										
 									</div>
 
 								</form>
@@ -173,7 +181,11 @@
 							<hr class = "modal__addWork_marker">
 
 							<div class = "modal__addWork__footer">
+								<!-- Il est nécessaire de rajoutter cette div "modal__addwork__display_errorMessage" pour avoir une zone plus grande que le bouton seul (soumis à du padding),
+								pour faciliter un effet de survol. Utiliser le footer de la modale ne serait pas cohérent non plus. -->
+								<div class = "modal__addwork__display_errorMessage"> 
 								<input type = "submit" id ="modal__addWork__validate" class = "modal__addWork__validate" value = "Valider" disabled>
+								</div>
 							</div>
 
 						</div>
