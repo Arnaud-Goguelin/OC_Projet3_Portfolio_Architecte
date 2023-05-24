@@ -1,5 +1,5 @@
 
-const connection = document.querySelector('[id = "connection"]');
+const connection = document.querySelector('[id = "login__submit"]');
 /*Au click sur le bouton "Se Connecter", récupérer l'email et password saisi, 
 *les envoyer à l'API, 
 *s'ils sont bons, être rediriger vers index.html

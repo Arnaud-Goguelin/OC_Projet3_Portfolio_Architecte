@@ -249,7 +249,7 @@ nav img:hover {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"]{
+#contact__submit, #login__submit{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -575,7 +575,7 @@ hr {
 }
 
 #modal__addWork__validate {
-	background-color:#A7A7A7;
+	/* background-color: #A7A7A7; */
 	width: 40%;
 	padding: 10px 45px 10px 45px;
 	border: none;
@@ -584,4 +584,12 @@ hr {
 	font-size: 14px;
 	font-weight: 700;
 	color: white;
+}
+
+#modal__addWork__validate :disabled {
+	background-color:#A7A7A7;
+}
+
+#modal__addWork__validate :enabled {
+	background-color:#1D6154;
 }
