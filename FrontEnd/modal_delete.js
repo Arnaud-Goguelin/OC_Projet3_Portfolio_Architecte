@@ -4,7 +4,6 @@ import { createWorksModal } from "./modal_open_close.js";
 export async function deleteSelectedWork(event) {
 
     let figure = event.target.closest("figure");
-    console.log(figure.dataset.id)
 
     try {
 
