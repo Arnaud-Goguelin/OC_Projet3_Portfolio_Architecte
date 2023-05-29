@@ -71,8 +71,9 @@ export function openAddWorkModal() {
 
     //Gestion de l'affichage des messages d'erreur
     const displayErrorMessageZone = document.querySelector(".modal__addwork__display_errorMessage")
-    displayErrorMessageZone.addEventListener("mouseover", displayErrorMessage);
-    displayErrorMessageZone.addEventListener("mouseout", hideErrorMessage);
+    // choix des events "mousenter" et "mouseleave" plutôt que "mouseover" et "mouseout" pour la compatibilité avec chrome et firefox.
+    displayErrorMessageZone.addEventListener("mouseenter", displayErrorMessage);
+    displayErrorMessageZone.addEventListener("mouseleave", hideErrorMessage);
 }
 
 //Fermeture de la modale d'ajout d'un work et retour à la première modale "Gallerie Photo" 
