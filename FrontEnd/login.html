@@ -6,11 +6,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-    <link rel="shortcut icon" href="assets/icons/favicon.ico" />
-	<script type="module" src="login.js" defer></script>
+    <link rel="shortcut icon" href="assets/icons/favicon.ico">
+    <!-- chargement async déjà géré par le navigateur du fait des fichiers .JS chargés avec l'attribut "type=module" -->
+	<script type="module" src="login.js"></script>
 </head>
 
 <body>
@@ -34,7 +34,7 @@
             <label for="email">E-mail</label>
             <input type="email" name="email" id="email">
             <label for="password">Mot de passe</label>
-            <input name="password" id="password"></input>
+            <input name="password" id="password">
             <input type="submit" value="Se connecter" id="login__submit">
             <a href="#">Mot de passe oublié?</a>
         </form>
