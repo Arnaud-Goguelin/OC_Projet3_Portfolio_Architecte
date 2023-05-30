@@ -1,6 +1,6 @@
 import { works } from "./home.js";
 import { deleteSelectedWork } from "./modal_delete.js";
-import { openAddWorkModal } from "./modal_add_work.js";
+import { openAddWorkModal, resetFormAddWorkModal } from "./modal_add_work.js";
 
 export function openModal() {
     //Récupération et affichage des structures et contenus HTML dans les balises templates
@@ -34,6 +34,7 @@ export function openModal() {
 */
 
 function closeModal(target) {
+    resetFormAddWorkModal();
     target = document.querySelector(".modal__background");
     target.remove();
 }

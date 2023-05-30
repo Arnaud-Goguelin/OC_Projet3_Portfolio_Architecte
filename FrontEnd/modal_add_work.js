@@ -85,11 +85,16 @@ export function openAddWorkModal() {
 //Fermeture de la modale d'ajout d'un work et retour à la première modale "Gallerie Photo" 
 //(efface l'intégralité de la modale et l'affiche à nouveau avec réinitialisation des variables de vérifications des données des formulaires)
 function closeAddWorkModal() {
+    resetFormAddWorkModal();
+    document.querySelector(".modal__background").remove();
+    openModal();
+}
+
+export function resetFormAddWorkModal() {
+
     newWorkImageOk = false;
     newWorkTitleOk = false;
     newWorkCategoryOk = false;
-    document.querySelector(".modal__background").remove();
-    openModal();
 }
 
 /* Saisie d'une nouvelle catégorie dans la liste déroulante de choix.
