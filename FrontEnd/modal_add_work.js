@@ -116,6 +116,8 @@ function findNewImage() {
 
     // Vérification du format et de la taille de l'image
     if (inputImage.files[0].type !== "image/jpeg" && inputImage.files[0].type !== "image/png") {
+        //Suppression d'éventuel message d'erreur précédent
+        hideErrorMessage();
         //Affichage message d'erreur
         const ErrorMessageZone = document.querySelector(".modal__addWork__image_container");
         createErrorMessage("Format du fichier incorrect. Format requis: image.jpeg ou image.png.");
@@ -128,9 +130,11 @@ function findNewImage() {
 
     // Rappel : 4 Mo = 4194304 o
     if (inputImage.files[0].size > 4194304) {
+        //Suppression d'éventuel message d'erreur précédent
+        hideErrorMessage();
         //Affichage message d'erreur
         const ErrorMessageZone = document.querySelector(".modal__addWork__image_container");
-        createErrorMessage("Taille du fichier trop importante.Taille maximale autorisée : 4 Mo.");
+        createErrorMessage("Taille du fichier trop importante. Taille maximale autorisée : 4 Mo.");
         ErrorMessageZone.appendChild(errorMessage);
         //Réinitialisation
         inputImage.value = "";
