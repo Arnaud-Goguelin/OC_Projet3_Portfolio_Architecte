@@ -55,7 +55,10 @@ export function openAddWorkModal() {
         if (event.target.value != "") {
             newWorkTitleOk = true;
             checkEntries();
+        }else{
+            newWorkTitleOk = false;
         }
+        
     });
 
     //Si une catégorie est sélectionnée on déclenche checkEntries et on passe newWorkCategoryOk à true et on teste l'activation du bouton "valider"
@@ -63,7 +66,10 @@ export function openAddWorkModal() {
         if (event.target.value != "") {
             newWorkCategoryOk = true;
             checkEntries();
+        }else{
+            newWorkCategoryOk = false;
         }
+        
     });
 
     const validateButton = document.querySelector("#modal__addWork__validate")
