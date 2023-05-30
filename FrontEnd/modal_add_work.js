@@ -72,7 +72,7 @@ export function openAddWorkModal() {
     //Gestion de l'affichage des messages d'erreur
     const displayErrorMessageZone = document.querySelector(".modal__addwork__display_errorMessage")
     // choix des events "mousenter" et "mouseleave" plutôt que "mouseover" et "mouseout" pour la compatibilité avec chrome et firefox.
-    displayErrorMessageZone.addEventListener("mouseenter", displayErrorMessage);
+    displayErrorMessageZone.addEventListener("mouseenter", noValueErrorMessage);
     displayErrorMessageZone.addEventListener("mouseleave", hideErrorMessage);
 }
 
@@ -116,7 +116,11 @@ function findNewImage() {
 
     // Vérification du format et de la taille de l'image
     if (inputImage.files[0].type !== "image/jpeg" && inputImage.files[0].type !== "image/png") {
-        displayErrorMessage(`Format du fichier incorrect.<br><br>Format requis : <span style = "font-style: italic;">.jpeg</span> ou <span style = "font-style: italic;">.png</span>.`);
+        //Affichage message d'erreur
+        const ErrorMessageZone = document.querySelector(".modal__addWork__image_container");
+        createErrorMessage("Format du fichier incorrect. Format requis: image.jpeg ou image.png.");
+        ErrorMessageZone.appendChild(errorMessage);
+        //Réinitialisation
         inputImage.value = "";
         newWorkImageOk = false;
         return;
@@ -124,11 +128,17 @@ function findNewImage() {
 
     // Rappel : 4 Mo = 4194304 o
     if (inputImage.files[0].size > 4194304) {
-        displayErrorMessage(`Taille du fichier trop importante.<br><br>Taille maximale autorisée : 4 Mo.`);
+        //Affichage message d'erreur
+        const ErrorMessageZone = document.querySelector(".modal__addWork__image_container");
+        createErrorMessage("Taille du fichier trop importante.Taille maximale autorisée : 4 Mo.");
+        ErrorMessageZone.appendChild(errorMessage);
+        //Réinitialisation
         inputImage.value = "";
         newWorkImageOk = false;
         return;
     }
+
+    hideErrorMessage();
 
     // On passe newWorkImageOk à true lorsque les 3 vérifications ci dessus sont passées (et que la fonction n'est pas arrêtée par un "return").
     // Puis on teste l'activation du bouton "valider"
@@ -169,7 +179,7 @@ function checkEntries() {
 }
 
 // Affichage des messages d'erreur
-function displayErrorMessage() {
+function noValueErrorMessage() {
 
     if (newWorkImageOk === false) {
         const ErrorMessageZone = document.querySelector(".modal__addWork__image_container");
@@ -191,8 +201,8 @@ function displayErrorMessage() {
 }
 
 // Création des messages d'erreur
-function createErrorMessage( errorMessageText) {
-    
+function createErrorMessage(errorMessageText) {
+
     errorMessage = document.createElement("p");
     errorMessage.innerText = errorMessageText;
     errorMessage.classList.add("error_message_specific");
@@ -201,6 +211,7 @@ function createErrorMessage( errorMessageText) {
 
 // Suppression des messages d'erreur
 function hideErrorMessage() {
+
     const errorMessages = document.querySelectorAll(".error_message_specific");
     errorMessages ? errorMessages.forEach(errorMessage => errorMessage.remove()) : null;
 }
