@@ -214,7 +214,7 @@ nav img:hover {
 }
 
 #login {
-	height: 850px;
+	height: 80vh;
 }
 
 #contact > *, #login > * {
@@ -270,6 +270,7 @@ nav img:hover {
 }
 
 footer {
+	position: relative;
 	padding: 25px 0 25px 0;
 	width: 100%;
 	background-color: white;
