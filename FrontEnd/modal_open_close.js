@@ -47,6 +47,7 @@ export async function createWorksModal(works) {
     for (const work of works) {
             
         const figureElement = document.createElement("figure");
+        // Ajout d'une id à la figure pour permettre la suppression d'un work
         figureElement.dataset.id = work.id;
         modalGallery.appendChild(figureElement);
 
