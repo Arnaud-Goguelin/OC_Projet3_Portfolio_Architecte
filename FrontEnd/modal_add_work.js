@@ -57,6 +57,7 @@ export function openAddWorkModal() {
             checkEntries();
         }else{
             newWorkTitleOk = false;
+            checkEntries();
         }
         
     });
@@ -68,6 +69,7 @@ export function openAddWorkModal() {
             checkEntries();
         }else{
             newWorkCategoryOk = false;
+            checkEntries();
         }
         
     });
