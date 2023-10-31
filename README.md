@@ -4,7 +4,7 @@ Organisme de Formation: Openclassrooms
 ### Projet 3 : Créez une page web dynamique avec JavaScript
 
 ### Consignes du projet:
-  - Lien vers a maquette à intégrer: [Figma_Architecte]([https://www.figma.com/file/aen32jonHhD7JnIEL2b3sE/ARCHIVED-Maquettes-Booki-(desktop%2C-mobile%2C-tablette)?type=design&node-id=3-0&mode=design](https://www.figma.com/file/kfKHknHySoTibZfdolGAX6/Sophie-Bluel---Desktop?type=design&node-id=0-1&mode=design)
+  - Lien vers a maquette à intégrer: [Figma_Architecte](https://www.figma.com/file/kfKHknHySoTibZfdolGAX6/Sophie-Bluel---Desktop?type=design&node-id=0-1&mode=design)
   - Développer la page de présentation des travaux de l'architecte (à partir du HTML fourni)
   - Développer la page de connexion de l'administrateur du site (le client) (code à créer de zéro)
   - Développer la modale permettant d'uploader de nouveaux médias (code à créer from scratch)
