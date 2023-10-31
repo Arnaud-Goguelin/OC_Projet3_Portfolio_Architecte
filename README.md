@@ -3,6 +3,7 @@ Organisme de Formation: Openclassrooms
 
 ### Projet 3 : Créez une page web dynamique avec JavaScript
 **Projet validé**
+[Site deployé](https://p3portfolioarchideployed.pages.dev/)
 
 ### Consignes du projet:
   - Lien vers a maquette à intégrer: [Figma_Architecte](https://www.figma.com/file/kfKHknHySoTibZfdolGAX6/Sophie-Bluel---Desktop?type=design&node-id=0-1&mode=design)
